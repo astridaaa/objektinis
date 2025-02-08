@@ -1,16 +1,22 @@
 #include <iostream>
-#include <iomanip> 
+#include <iomanip>
 #include <vector>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 
-using std::cout;
 using std::cin;
+using std::cout;
+using std::endl;
 using std::string;
 using std::vector;
-using std::endl;
-
-struct Stud{
+struct Stud
+{
     string vardas, pavarde;
     int EGrez;
-    vector <int> NDrez;
+    vector<int> NDrez;
 };
+
+Stud stud;
+int paz;
+int a = (rand() % 5 + 2);
