@@ -34,8 +34,8 @@ main()
         VISIstud.push_back(stud);
     }
 
-    cout << setw(15) << left << "Pavardė" << setw(15) << left << "Vardas" << setw(15) << left << "Galutinis (Vid.)\n";
-    cout << "---------------------------------------------" << endl;
+    cout << setw(15) << left << "Pavardė" << setw(15) << left << "Vardas" << setw(15) << left << "Galutinis (Vid.) / Galutinis (Med.)\n";
+    cout << "------------------------------------------------------------" << endl;
 
     for (Stud j : VISIstud)
     {

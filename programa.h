@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include <algorithm>
 
 using std::cin;
 using std::cout;
@@ -13,8 +14,10 @@ using std::fixed;
 using std::left;
 using std::setprecision;
 using std::setw;
+using std::sort;
 using std::string;
 using std::vector;
+
 struct Stud
 {
     string vardas, pavarde;
@@ -28,14 +31,35 @@ vector<Stud> VISIstud;
 
 double galutinis(vector<int> NDrez, int EGrez)
 {
-    double vidurkis;
-    double suma = 0;
-
-    for (int p : NDrez)
+    int b = rand() % 11 + 1;
+    if (b % 2 == 0)
     {
-        suma += p;
+        double vidurkis;
+        double suma = 0;
+
+        for (int p : NDrez)
+        {
+            suma += p;
+        }
+        vidurkis = suma / NDrez.size();
+        double Gbalas_vid = round((0.4 * vidurkis + 0.6 * EGrez) * 100) / 100;
+        return Gbalas_vid;
     }
-    vidurkis = suma / NDrez.size();
-    double Gbalas = round((0.4 * vidurkis + 0.6 * EGrez) * 100) / 100;
-    return Gbalas;
+    else
+    {
+        double med;
+        double Gbalas_med;
+        sort(NDrez.begin(), NDrez.end());
+        if (NDrez.size() % 2 == 0)
+        {
+            med = (NDrez[NDrez.size() / 2 - 1] + NDrez[NDrez.size() / 2]) / 2;
+        }
+        else
+        {
+            med = NDrez[round(NDrez.size() / 2) - 1];
+        }
+        Gbalas_med = round((0.4 * med + 0.6 * EGrez) * 100) / 100;
+        return Gbalas_med;
+    }
 }
+
