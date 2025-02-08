@@ -9,7 +9,7 @@ main()
         cin >> stud.vardas;
         cout << "Įveskite studento pavardę\n";
         cin >> stud.pavarde;
-
+        int a = (rand() % 4 + 2);
         cout << "Įveskite " << a << " studento pažymius (-į)" << endl;
         for (int i = 0; i < a; i++)
         {
@@ -30,5 +30,15 @@ main()
             cin >> stud.EGrez;
         }
         cout << "..." << endl;
+
+        VISIstud.push_back(stud);
+    }
+
+    cout << setw(15) << left << "Pavardė" << setw(15) << left << "Vardas" << setw(15) << left << "Galutinis (Vid.)\n";
+    cout << "---------------------------------------------" << endl;
+
+    for (Stud j : VISIstud)
+    {
+        cout << setw(15) << left << j.pavarde << setw(15) << left << j.vardas << setw(15) << fixed << setprecision(2) << galutinis(j.NDrez, j.EGrez) << endl;
     }
 }
