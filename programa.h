@@ -6,17 +6,23 @@
 #include <ctime>
 #include <cmath>
 #include <algorithm>
+#include <cctype>
 
 using std::cin;
 using std::cout;
 using std::endl;
 using std::fixed;
+using std::getline;
+using std::isalpha;
+using std::isspace;
 using std::left;
 using std::setprecision;
 using std::setw;
 using std::sort;
 using std::string;
 using std::vector;
+using std::numeric_limits;
+using std::streamsize;
 
 struct Stud
 {
@@ -61,5 +67,19 @@ double galutinis(vector<int> NDrez, int EGrez)
         Gbalas_med = round((0.4 * med + 0.6 * EGrez) * 100) / 100;
         return Gbalas_med;
     }
+}
+
+bool tinkamas(string vardas){
+    for (char a : vardas)
+        {
+            if (isalpha(a) == false || isspace(a) == true)            
+            {
+                return false;
+                
+            }
+            else continue;
+            }
+
+    return true;
 }
 
