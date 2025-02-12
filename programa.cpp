@@ -52,7 +52,27 @@ main()
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     }
+    else if (meniu == 3)
+    {
+        int K = rand() % 10 + 2;
+        for (int j = 0; j < K; j++)
+        {
 
+            Stud stud;
+
+            mot(stud);
+
+            int A = rand() % 10 + 2;
+            for (int i = 0; i < A; i++)
+            {
+                int P = rand() % 10 + 1;
+                stud.NDrez.push_back(P);
+            }
+            stud.EGrez = rand() % 10 + 1;
+            VISIstud.push_back(stud);
+        }
+    }
+    
     if (meniu == 4)
     {
         return EXIT_SUCCESS;
