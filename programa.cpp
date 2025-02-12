@@ -52,6 +52,47 @@ main()
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     }
+    
+    else if (meniu == 2)
+    {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        do
+        {
+            Stud stud;
+            cout << "Įveskite studento vardą, baigę įveskite 'stop'" << endl;
+            getline(cin, stud.vardas);
+
+            while (tinkamas(stud.vardas) == false)
+            {
+                cout << "Įveskite tinkamą vardą" << endl;
+                getline(cin, stud.vardas);
+            }
+            if (stud.vardas == "stop")
+            {
+                stop2 == true;
+                break;
+            }
+
+            cout << "Įveskite studento pavardę" << endl;
+            getline(cin, stud.pavarde);
+
+            while (tinkamas(stud.pavarde) == false)
+            {
+                cout << "Įveskite tinkamą pavardę" << endl;
+                getline(cin, stud.pavarde);
+            }
+            int A = rand() % 10 + 2;
+            for (int i = 0; i < A; i++)
+            {
+                int P = rand() % 10 + 1;
+                stud.NDrez.push_back(P);
+            }
+            stud.EGrez = rand() % 10 + 1;
+            VISIstud.push_back(stud);
+            cout << "..." << endl;
+        } while (stop2 != true);
+    }
+
     else if (meniu == 3)
     {
         int K = rand() % 10 + 2;
@@ -72,7 +113,7 @@ main()
             VISIstud.push_back(stud);
         }
     }
-    
+
     if (meniu == 4)
     {
         return EXIT_SUCCESS;
