@@ -8,18 +8,18 @@
     {
     case 1 :{
     duomenu_ivedimas(visi);
-    print(visi);
+    print(visi, false);
     break;}
 
     case 2 : {
     duomenu_ivedimas(visi);
-    print(visi);
+    print(visi, false);
     break;}
 
     case 3 : {
   
     duomenu_generavimas(visi);
-    print(visi);
+    print(visi, false);
     
     break;}
 
@@ -30,9 +30,9 @@
         cout << "Duomenis išvesti terminale - 1, duomenis isvesti faile - 2" << endl;
         cin >> printinimas;
         if(printinimas == 1){
-            print(visi);
+            print(visi, false);
         }
-        else isvedimas(visi);
+        else print(visi, true);
         break;
     }
     case 5:{

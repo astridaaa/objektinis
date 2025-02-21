@@ -248,32 +248,7 @@ double galutinisvid(Stud studentas)
     return round((0.4 * vidurkis + 0.6 * studentas.egzaminas) * 100) / 100;
 }
 
-void print(vector<Stud> visi)
-{
-    int pagalx;
-    cout << "Galutinis balas skaičiuojamas pagal:" << endl;
-    cout << "1 - medianą\n";
-    cout << "2 - vidurkį\n";
-    cin >> pagalx;
-    if (pagalx == 1)
-    {
-        cout << std::setw(15) << std::left << "Pavardė" << std::setw(15) << std::left << "Vardas" << std::setw(15) << std::left << "Galutinis (Med.)\n";
-        cout << "----------------------------------------------------" << endl;
-        for (Stud j : visi)
-        {
-            cout << std::setw(15) << std::left << j.pavarde << std::setw(15) << std::left << j.vardas << std::setw(15) << std::fixed << std::setprecision(2) << galutinismed(j) << endl;
-        }
-    }
-    else
-    {
-        cout << std::setw(15) << std::left << "Pavardė" << std::setw(15) << std::left << "Vardas" << std::setw(15) << std::left << "Galutinis (Vid.)\n";
-        cout << "----------------------------------------------------" << endl;
-        for (Stud j : visi)
-        {
-            cout << std::setw(15) << std::left << j.pavarde << std::setw(15) << std::left << j.vardas << std::setw(15) << std::fixed << std::setprecision(2) << galutinisvid(j) << endl;
-        }
-    }
-}
+
 
 void fileskait(vector<Stud> &studentai)
 {
@@ -310,30 +285,43 @@ void fileskait(vector<Stud> &studentai)
         studentai.push_back(studentas);
     }
 }
+//milijonus su tuo nejasnu vest, updatint random vietoj srand, printf implementint //random device rd
+//std::mt19937 64 bits naudot mt(rd()) jeigu nera tai chromo biblioteka naudot
+//uniform int distribution<int> dist(1. 11)
+//...skaidrese yra fore su dist(mt)
 
-void isvedimas(vector<Stud> visi)
-{   int pagalx;
+
+
+void print(vector<Stud> visi, bool outputFILE)
+{
+    int pagalx;
     cout << "Galutinis balas skaičiuojamas pagal:" << endl;
     cout << "1 - medianą\n";
     cout << "2 - vidurkį\n";
     cin >> pagalx;
-    std::ofstream f("isvedimas.txt");
+    std::ostream* out;
+    //std:: ofstream f;
+    if(outputFILE){
+        std::ofstream f("isvedimas.txt");
+        out = &f;
+    }
+    else out = &cout;
     if (pagalx == 1)
-    {
-        f << std::setw(15) << std::left << "Pavardė" << std::setw(15) << std::left << "Vardas" << std::setw(15) << std::left << "Galutinis (Med.)\n";
-        f << "----------------------------------------------------" << endl;
+    {   
+        *out << std::setw(15) << std::left << "Pavardė" << std::setw(15) << std::left << "Vardas" << std::setw(15) << std::left << "Galutinis (Med.)\n";
+        *out << "----------------------------------------------------" << endl;
         for (Stud j : visi)
         {
-            f << std::setw(15) << std::left << j.pavarde << std::setw(15) << std::left << j.vardas << std::setw(15) << std::fixed << std::setprecision(2) << galutinismed(j) << endl;
+            *out << std::setw(15) << std::left << j.pavarde << std::setw(15) << std::left << j.vardas << std::setw(15) << std::fixed << std::setprecision(2) << galutinismed(j) << endl;
         }
     }
     else
     {
-        f << std::setw(15) << std::left << "Pavardė" << std::setw(15) << std::left << "Vardas" << std::setw(15) << std::left << "Galutinis (Vid.)\n";
-        f << "----------------------------------------------------" << endl;
+        *out << std::setw(15) << std::left << "Pavardė" << std::setw(15) << std::left << "Vardas" << std::setw(15) << std::left << "Galutinis (Vid.)\n";
+        *out << "----------------------------------------------------" << endl;
         for (Stud j : visi)
         {
-            f << std::setw(15) << std::left << j.pavarde << std::setw(15) << std::left << j.vardas << std::setw(15) << std::fixed << std::setprecision(2) << galutinisvid(j) << endl;
+            *out << std::setw(15) << std::left << j.pavarde << std::setw(15) << std::left << j.vardas << std::setw(15) << std::fixed << std::setprecision(2) << galutinisvid(j) << endl;
         }
     }
 }
