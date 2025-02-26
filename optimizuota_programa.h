@@ -33,6 +33,10 @@ using std::vector;
 #include <chrono>
 #include <cpuid.h>
 
+// system
+#include <cstdlib>
+#include <cstdio>
+
 int meniu;
 
 int paz;
@@ -56,6 +60,7 @@ bool tinkamas_char(string vardas)
     }
     return true;
 }
+
 bool tinkamas_int(int skaicius)
 {
     while (skaicius > 10 || skaicius < 0)
@@ -68,44 +73,48 @@ bool tinkamas_int(int skaicius)
     }
     return true;
 }
-double galutinismed(Stud studentas)
+
+double galutinis(Stud studentas, int PagalSkaiciavimas)
 {
-    double med;
-    sort(studentas.nd.begin(), studentas.nd.end());
-    if (studentas.nd.size() % 2 == 0)
+    if (PagalSkaiciavimas == 0)
     {
-        med = (studentas.nd[studentas.nd.size() / 2 - 1] + studentas.nd[studentas.nd.size() / 2]) / 2;
+        double med;
+        sort(studentas.nd.begin(), studentas.nd.end());
+        if (studentas.nd.size() % 2 == 0)
+        {
+            med = (studentas.nd[studentas.nd.size() / 2 - 1] + studentas.nd[studentas.nd.size() / 2]) / 2;
+        }
+        else
+        {
+            med = studentas.nd[round(studentas.nd.size() / 2) - 1];
+        }
+        return round((0.4 * med + 0.6 * studentas.egzaminas) * 100) / 100;
     }
     else
     {
-        med = studentas.nd[round(studentas.nd.size() / 2) - 1];
+        double vidurkis;
+        double suma{0.0};
+        for (size_t ss = 0; ss < studentas.nd.size(); ss++)
+        {
+            suma += studentas.nd[ss];
+        }
+
+        vidurkis = suma / studentas.nd.size();
+        return round((0.4 * vidurkis + 0.6 * studentas.egzaminas) * 100) / 100;
     }
-    return round((0.4 * med + 0.6 * studentas.egzaminas) * 100) / 100;
 }
 
-double galutinisvid(Stud studentas)
-{
-    double vidurkis;
-    double suma{0.0};
-    for (size_t ss = 0; ss < studentas.nd.size(); ss++)
-    {
-        suma += studentas.nd[ss];
-    }
-
-    vidurkis = suma / studentas.nd.size();
-    return round((0.4 * vidurkis + 0.6 * studentas.egzaminas) * 100) / 100;
-}
 void pazymiu_ivedimas(Stud &studentas)
 {
     bool stop1 = false;
-    cout << "Įveskite studento pažymius (-į), baigę įveskite 0" << endl;
+    cout << "Iveskite studento pazymius (-i), baige iveskite 0" << endl;
     do
     {
         int paz;
         cin >> paz;
         while (tinkamas_int(paz) == false)
         {
-            cout << "Įveskite teisingą pažymį" << endl;
+            cout << "Iveskite teisinga pazymi" << endl;
             cin >> paz;
         }
 
@@ -130,6 +139,7 @@ void paz_gener(Stud &studentas)
     }
     cout << endl;
 }
+
 Stud vardai(Stud &studentas)
 {
     int vsuma = 0;
@@ -175,6 +185,7 @@ Stud vardai(Stud &studentas)
         return studentas;
     }
 }
+
 void duomenu_ivedimas(vector<Stud> &studentai)
 {
     bool stop;
@@ -186,11 +197,11 @@ void duomenu_ivedimas(vector<Stud> &studentai)
 
         if (meniu == 1 || meniu == 2)
         {
-            cout << "Įveskite studento vardą, baigę įveskite 'stop'" << endl;
+            cout << "Iveskite studento varda, baige iveskite 'stop'" << endl;
             getline(cin, studentas.vardas);
             while (tinkamas_char(studentas.vardas) == false)
             {
-                cout << "Įveskite tinkamą vardą" << endl;
+                cout << "Iveskite tinkama varda" << endl;
                 getline(cin, studentas.vardas);
             }
             if (studentas.vardas == "stop")
@@ -199,18 +210,18 @@ void duomenu_ivedimas(vector<Stud> &studentai)
                 break;
             }
 
-            cout << "Įveskite studento pavardę" << endl;
+            cout << "Iveskite studento pavarde" << endl;
             getline(cin, studentas.pavarde);
             while (tinkamas_char(studentas.pavarde) == false)
             {
-                cout << "Įveskite tinkamą pavardę" << endl;
+                cout << "Iveskite tinkama pavarde" << endl;
                 getline(cin, studentas.pavarde);
             }
-            cout << "Įveskite egzamino balą" << endl;
+            cout << "Iveskite egzamino bala" << endl;
             cin >> studentas.egzaminas;
             while (tinkamas_int(studentas.egzaminas) == false)
             {
-                cout << "Įveskite teisingą egzamino rezultatą" << endl;
+                cout << "Iveskite teisinga egzamino rezultata" << endl;
                 cin >> studentas.egzaminas;
             }
         }
@@ -218,14 +229,14 @@ void duomenu_ivedimas(vector<Stud> &studentai)
         if (meniu == 1)
         {
             pazymiu_ivedimas(studentas);
-            studentas.BalasGalutinisMed = galutinismed(studentas);
-            studentas.BalasGalutinisVid = galutinisvid(studentas);
+            // studentas.BalasGalutinisMed = galutinismed(studentas);
+            // studentas.BalasGalutinisVid = galutinisvid(studentas);
         }
         else if (meniu == 2)
         {
             paz_gener(studentas);
-            studentas.BalasGalutinisMed = galutinismed(studentas);
-            studentas.BalasGalutinisVid = galutinisvid(studentas);
+            // studentas.BalasGalutinisMed = galutinismed(studentas);
+            // studentas.BalasGalutinisVid = galutinisvid(studentas);
         }
         studentai.push_back(studentas);
 
@@ -243,53 +254,81 @@ void duomenu_generavimas(vector<Stud> &studentai)
         vardai(studentas);
         studentas.egzaminas = rand() % 10 + 1;
         paz_gener(studentas);
-        studentas.BalasGalutinisMed = galutinismed(studentas);
-        studentas.BalasGalutinisVid = galutinisvid(studentas);
+        // studentas.BalasGalutinisMed = galutinismed(studentas);
+        // studentas.BalasGalutinisVid = galutinisvid(studentas);
         studentai.push_back(studentas);
     }
 }
 
-void fileskait(vector<Stud> &studentai)
+void fileskait(vector<Stud> &studentai, int testavimas)
 {
+    double visasLaikas = 0.0;
     vector<string> visaeil;
     Stud studentas;
     int pazymys;
     string eilute;
+    ifstream f;
     std::stringstream bufferis;
-    ifstream f("kursiokai.txt");
-    bufferis << f.rdbuf(); // pointeris i bufferi
-    f.close();
-    // stringjibanustreamus pasiziuret
-    while (bufferis)
-    {
-        if (!bufferis.eof())
-        {
-            getline(bufferis, eilute);
-            visaeil.push_back(eilute);
-        }
-        else
-            break;
-    }
-    for (string s : visaeil)
+
+    if (testavimas == 0)
+        f.open("kursiokai.txt");
+    else if (testavimas == 1)
+        f.open("studentai10000.txt");
+    else if (testavimas == 2)
+        f.open("studentai100000.txt");
+    else if (testavimas == 3)
+        f.open("studentai1000000.txt");
+
+    int iteracijos;
+
+    (testavimas == 0) ? iteracijos = 0 : iteracijos = 2;
+
+    for (int i = 0; i <= iteracijos; i++)
     {
 
-        std::istringstream f(s);
-        f >> studentas.vardas >> studentas.pavarde;
-        while (f >> pazymys)
+        studentai.clear();
+        bufferis.str("");
+        bufferis.clear();
+
+        auto start = std::chrono::high_resolution_clock::now();
+        bufferis << f.rdbuf();
+        f.close();
+        while (bufferis)
         {
-            studentas.nd.push_back(pazymys);
+            if (!bufferis.eof())
+            {
+                getline(bufferis, eilute);
+                visaeil.push_back(eilute);
+            }
+            else
+                break;
         }
-        studentas.egzaminas = studentas.nd.back();
-        studentas.nd.pop_back();
-        studentas.BalasGalutinisVid = galutinisvid(studentas);
-        studentas.BalasGalutinisMed = galutinismed(studentas);
-        studentai.push_back(studentas);
+        for (string s : visaeil)
+        {
+            std::istringstream f(s);
+            f >> studentas.vardas >> studentas.pavarde;
+            studentas.nd.clear();
+            while (f >> pazymys)
+            {
+                studentas.nd.push_back(pazymys);
+            }
+            studentas.egzaminas = studentas.nd.back();
+            studentas.nd.pop_back();
+            studentai.push_back(studentas);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> diff = end - start;
+        visasLaikas += diff.count();
+        if (testavimas > 0 && testavimas <= 3)
+        {
+            cout << i + 1 << " iteracija: " << std::fixed << std::setprecision(3) << diff.count() << "s" << endl;
+        }
+    }
+    if (testavimas > 0 && testavimas <= 3)
+    {
+        cout << "Programos vidutinis vykdymo laikas: " << std::fixed << std::setprecision(3) << visasLaikas / 3 << "s" << endl;
     }
 }
-// milijonus su tuo nejasnu vest, updatint random vietoj srand, printf implementint //random device rd
-// std::mt19937 64 bits naudot mt(rd()) jeigu nera tai chromo biblioteka naudot
-// uniform int distribution<int> dist(1. 11)
-//...skaidrese yra fore su dist(mt)
 
 bool PalygintiVardas(Stud stud1, Stud stud2)
 {
@@ -303,30 +342,38 @@ bool PalygintiPavardes(Stud stud1, Stud stud2)
 
 bool PalygintiBalaMed(Stud stud1, Stud stud2)
 {
-    return stud1.BalasGalutinisMed > stud2.BalasGalutinisMed;
+    // return stud1.BalasGalutinisMed > stud2.BalasGalutinisMed;
+    return galutinis(stud1, 0) > galutinis(stud2, 0);
 }
 
 bool PalygintiBalaVid(Stud stud1, Stud stud2)
 {
-    return stud1.BalasGalutinisVid > stud2.BalasGalutinisVid;
+    // return stud1.BalasGalutinisVid > stud2.BalasGalutinisVid;
+    return galutinis(stud1, 1) > galutinis(stud2, 1);
 }
 
 void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
 {
+
+    // cout << "PASIEKE PRINT FUNKCIJA\n";
     int SkaiciuotiPagal;
-    cout << "Galutinis balas skaičiuojamas pagal:" << endl;
-    cout << "1 - medianą\n";
-    cout << "2 - vidurkį\n";
+    cout << "Galutinis balas skaiciuojamas pagal:" << endl;
+    cout << "1 - mediana\n";
+    cout << "2 - vidurki\n";
     cin >> SkaiciuotiPagal;
     std::ostream *out;
     std::ofstream f;
+    f.open("isvedimas.txt");
+
     if (outputFILE)
     {
-        f.open("isvedimas.txt");
         out = &f;
     }
+
     else
+    {
         out = &cout;
+    }
 
     if (RusiavimasPagal == 1)
     {
@@ -336,7 +383,7 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
     {
         sort(visi.begin(), visi.end(), PalygintiPavardes);
     }
-//pagal mediana
+    // pagal mediana
     if (SkaiciuotiPagal == 1)
     {
         if (RusiavimasPagal == 3)
@@ -347,19 +394,21 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
         *out << "----------------------------------------------------" << endl;
         for (Stud j : visi)
         {
-            *out << std::setw(15) << std::left << j.pavarde << std::setw(15) << std::left << j.vardas << std::setw(15) << std::fixed << std::setprecision(2) << j.BalasGalutinisMed << endl;
+            *out << std::setw(15) << std::left << j.pavarde << std::setw(15) << std::left << j.vardas << std::setw(15) << std::fixed << std::setprecision(2) << galutinis(j, 0) << endl;
         }
     }
-    //skaiciuojam rn pagal vidurki
-    else{
-        if (RusiavimasPagal == 3){
+    // skaiciuojam rn pagal vidurki
+    else
+    {
+        if (RusiavimasPagal == 3)
+        {
             sort(visi.begin(), visi.end(), PalygintiBalaVid);
         }
         *out << std::setw(15) << std::left << "Pavardė" << std::setw(15) << std::left << "Vardas" << std::setw(15) << std::left << "Galutinis (Vid.)\n";
         *out << "----------------------------------------------------" << endl;
         for (Stud j : visi)
         {
-            *out << std::setw(15) << std::left << j.pavarde << std::setw(15) << std::left << j.vardas << std::setw(15) << std::fixed << std::setprecision(2) << j.BalasGalutinisVid << endl;
+            *out << std::setw(15) << std::left << j.pavarde << std::setw(15) << std::left << j.vardas << std::setw(15) << std::fixed << std::setprecision(2) << galutinis(j, 1) << endl;
         }
     }
 }

@@ -1,55 +1,66 @@
-#include "optimizuota_programa.h" 
-//pirmas ranka ivedinejant veikia
-//antras veikia
-//trecias veikia
- int main(){
+#include "optimizuota_programa.h"
+
+int main()
+{
     srand(time(NULL));
     vector<Stud> visi;
-    cout << "Pasirinkite: 1 - duomenys įvedinėjami ranka, 2 - pažymiai generuojami, 3 - generuojami visi studentų duomenys, 4 - duomenys nuskaitomi iš failo, 5 - baigti programą" << endl;
+    int rusiavimas;
+    cout << "Pasirinkite: 1 - duomenys ivedinejami ranka, 2 - pazymiai generuojami, 3 - generuojami visi studentu duomenys, 4 - duomenys nuskaitomi is failo, 5 - testavimas, 6 - baigti programa" << endl;
     cin >> meniu;
     switch (meniu)
     {
-    case 1 :{
-    duomenu_ivedimas(visi);
-    print(visi, false, 4);
-    break;}
-
-    case 2 : {
-    duomenu_ivedimas(visi);
-    print(visi, false, 4);
-    break;}
-
-    case 3 : {
-  
-    duomenu_generavimas(visi);
-    print(visi, false, 4);
-    
-    break;}
-
-    case 4:{  
-        int printinimas;
-        int rusiavimas;
-        //nuskaito is kursioku failo, pirmas stulpas vardas, antras pavarde, visi kiti like i nd ir paskutinis i egza
-        fileskait(visi);
-        cout << "Duomenis išvesti terminale - 1, duomenis isvesti faile - 2" << endl;
-        cin >> printinimas;
-        cout << "Duomenys rūšiuojami pagal: \n";
-        cout << "1 - vardai abėcėlės tvarka\n";
-        cout << "2 - pavardės abėcėlės tvarka\n";
-        cout << "3 - galutiniai balai mažėjimo tvarka\n";
-        cin >> rusiavimas;
-        if(printinimas == 1){
-            print(visi, false, rusiavimas);
-        }
-        else print(visi, true, rusiavimas);
+    case 1:
+    {
+        duomenu_ivedimas(visi);
+        print(visi, false, 4);
         break;
     }
-    case 5:{
-    return 0;  
+
+    case 2:
+    {
+        duomenu_ivedimas(visi);
+        print(visi, false, 4);
+        break;
+    }
+
+    case 3:
+    {
+        duomenu_generavimas(visi);
+        print(visi, false, 4);
+        break;
+    }
+
+    case 4:
+    {
+        int printinimas;
+        fileskait(visi, 0);
+        cout << "Duomenis isvesti terminale - 1, duomenis isvesti faile - 2" << endl;
+        cin >> printinimas;
+        cout << "Duomenys rusiuojami pagal: 1 - vardus; 2 - pavardes; 3 - galutinius balus " << endl;
+        cin >> rusiavimas;
+        if (printinimas == 1)
+        {
+            print(visi, false, rusiavimas);
+        }
+        else
+            print(visi, true, rusiavimas);
+        break;
+    }
+    case 5:
+    {
+
+        int testavimas;
+        cout << "Testuoti su 1 - 10,000 studentu; 2 - 100,000 studentu; 3 - 1,000,000 studentu" << endl;
+        cin >> testavimas;
+
+        fileskait(visi, testavimas);
+        print(visi, true, 4);
+        break;
+
+    }
+    case 6:
+    {
+        return 0;
     }
     }
 }
-
-
-
-
