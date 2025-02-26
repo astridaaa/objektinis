@@ -24,8 +24,7 @@ int main()
     }
 
     case 3:
-    {
-        duomenu_generavimas(visi);
+    {   duomenu_generavimas(visi);
         print(visi, false, 4);
         break;}
 
