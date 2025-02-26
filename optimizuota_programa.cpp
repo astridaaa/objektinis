@@ -30,8 +30,7 @@ int main()
         break;}
 
     case 4:
-    {
-        int printinimas;
+    {   int printinimas;
         fileskait(visi, 0);
         cout << "Duomenis isvesti terminale - 1, duomenis isvesti faile - 2" << endl;
         cin >> printinimas;
