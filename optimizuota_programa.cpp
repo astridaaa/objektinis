@@ -1,5 +1,7 @@
 #include "optimizuota_programa.h"
 
+// maina NEKEIST
+
 int main()
 {
     srand(time(NULL));
@@ -24,12 +26,15 @@ int main()
     }
 
     case 3:
-    {   duomenu_generavimas(visi);
+    {
+        duomenu_generavimas(visi);
         print(visi, false, 4);
-        break;}
+        break;
+    }
 
     case 4:
-    {   int printinimas;
+    {
+        int printinimas;
         fileskait(visi, 0);
         cout << "Duomenis isvesti terminale - 1, duomenis isvesti faile - 2" << endl;
         cin >> printinimas;
@@ -44,14 +49,14 @@ int main()
         break;
     }
     case 5:
-    {   int testavimas;
+    {
+        int testavimas;
         cout << "Testuoti su 1 - 10,000 studentu; 2 - 100,000 studentu; 3 - 1,000,000 studentu" << endl;
         cin >> testavimas;
 
         fileskait(visi, testavimas);
         print(visi, true, 4);
         break;
-
     }
     case 6:
     {

@@ -1,0 +1,1 @@
+//visi funkciju pavadinimai
