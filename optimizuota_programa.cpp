@@ -1,4 +1,4 @@
-//#include "optimizuota_programa.h"
+// #include "optimizuota_programa.h"
 #include "Funkciju_aprasai.h"
 
 int main()
@@ -10,7 +10,25 @@ int main()
     vector<Stud> visi;
     int rusiavimas;
     cout << "Pasirinkite: 1 - duomenys ivedinejami ranka, 2 - pazymiai generuojami, 3 - generuojami visi studentu duomenys, 4 - duomenys nuskaitomi is failo, 5 - baigti programa" << endl;
-    cin >> meniu;
+    while (true)
+    {
+        try
+        {
+            cin >> meniu;
+
+            if (meniu < 1 || meniu > 5)// idet kad jei ir nera skaicius
+            { 
+                throw meniu;
+            }
+
+            break;
+        }
+        catch (int meniu)
+        {
+            cout << "Iveskite teisinga skaiciu (nuo 1 iki 5)\n";
+        }
+    }
+
     switch (meniu)
     {
     case 1:
@@ -54,6 +72,5 @@ int main()
     {
         return 0;
     }
-    
-}
+    }
 }
