@@ -205,13 +205,13 @@ void duomenu_generavimas(vector<Stud> &studentai)
 
 string filePasirinkimas()
 {
-    system("dir /b *.txt > temp.txt"); //reikia vienos rodykles nes tada ne apendina bet overwritina
+    system("dir /b *.txt > temp.txt"); 
     ifstream f;
     string eilute;
-    int sumaeil = 0;
+    int pasirinkimuSUM = 0;
     int pasirinkimas;
     vector<string> txtfiles;
-    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt"}; // temp.txt reikes isdelintint pries dedant i file arba i vektoriu itraukti
+    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt"}; 
     f.open("temp.txt");
     while (getline(f, eilute))
     {   bool pasikartojantis;
@@ -234,14 +234,29 @@ string filePasirinkimas()
     }
     f.close();
     system("del temp.txt");
-    cout << "Pasirinkite file: " << endl;
     int a = 1;
 
     for (int i = 0; i < txtfiles.size(); i++)
     {
         cout << txtfiles[i] << " |" << i+1 << " pasirinkimas" << endl;
+        pasirinkimuSUM += 1;
     }
-    cin >> pasirinkimas;
+    while(true){
+        try {
+            cout << "Pasirinkite file: " << endl;
+            cin >> pasirinkimas;
+
+            if (pasirinkimas < 1 || pasirinkimas > pasirinkimuSUM) {
+                throw pasirinkimas; 
+            }
+
+            break; 
+        } 
+        catch (int pasirinkimas) {
+            cout << "Iveskite teisinga skaiciu (nuo 1 iki " << pasirinkimuSUM << ")" << endl;
+        }
+    }
+    
     return txtfiles[pasirinkimas -1];
 }
 
@@ -339,10 +354,23 @@ bool PalygintiBalaVid(Stud stud1, Stud stud2)
 void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
 {
     int SkaiciuotiPagal;
-    cout << "Galutinis balas skaiciuojamas pagal:" << endl;
-    cout << "1 - mediana\n";
-    cout << "2 - vidurki\n";
-    cin >> SkaiciuotiPagal;
+    while (true) {
+        try {
+            cout << "Galutinis balas skaiciuojamas pagal:" << endl;
+            cout << "1 - mediana\n";
+            cout << "2 - vidurki\n";
+            cin >> SkaiciuotiPagal;
+
+            if (SkaiciuotiPagal != 1 && SkaiciuotiPagal != 2) {
+                throw SkaiciuotiPagal; 
+            }
+
+            break; 
+        } 
+        catch (int skaicius) {
+            cout << "Iveskite teisinga skaiciu (1 arba 2)\n";
+        }
+    }
     std::ostream *out;
     std::ofstream f;
     f.open("isvedimas.txt");
