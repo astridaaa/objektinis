@@ -16,7 +16,7 @@ void duomenu_ivedimas(vector<Stud> &studentai, int meniu);
 
 void duomenu_generavimas(vector<Stud> &studentai);
 
-void fileskait(vector<Stud> &studentai, int testavimas);
+void fileskait(vector<Stud> &studentai);
 
 bool PalygintiVardas(Stud stud1, Stud stud2);
 

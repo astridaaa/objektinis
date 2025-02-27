@@ -1,8 +1,4 @@
 #include "Funkciju_aprasai.h"
-// #include "optimizuota_programa.h"
-
-// su sistem dir
-// randomiseris
 
 bool tinkamas_char(string vardas)
 {
@@ -88,8 +84,6 @@ void paz_gener(Stud &studentas)
     for (int i = 0; i < A; i++)
     {
         int P = rand() % 10 + 1;
-        cout << endl;
-        cout << P << endl;
         studentas.nd.push_back(P);
     }
     cout << endl;
@@ -209,8 +203,51 @@ void duomenu_generavimas(vector<Stud> &studentai)
     }
 }
 
-void fileskait(vector<Stud> &studentai, int testavimas)
+string filePasirinkimas()
 {
+    system("dir /b *.txt > temp.txt"); //reikia vienos rodykles nes tada ne apendina bet overwritina
+    ifstream f;
+    string eilute;
+    int sumaeil = 0;
+    int pasirinkimas;
+    vector<string> txtfiles;
+    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt"}; // temp.txt reikes isdelintint pries dedant i file arba i vektoriu itraukti
+    f.open("temp.txt");
+    while (getline(f, eilute))
+    {   bool pasikartojantis;
+        for (int a = 1; a <= nenorimiFiles.size(); a++)
+        {
+            if (eilute != nenorimiFiles[a - 1])
+            {
+                pasikartojantis = false;
+            }
+            else
+            {
+                pasikartojantis = true;
+                break;
+            }
+        }
+        if (!pasikartojantis)
+        {
+            txtfiles.push_back(eilute);
+        }
+    }
+    f.close();
+    system("del temp.txt");
+    cout << "Pasirinkite file: " << endl;
+    int a = 1;
+
+    for (int i = 0; i < txtfiles.size(); i++)
+    {
+        cout << txtfiles[i] << " |" << i+1 << " pasirinkimas" << endl;
+    }
+    cin >> pasirinkimas;
+    return txtfiles[pasirinkimas -1];
+}
+
+void fileskait(vector<Stud> &studentai)
+{
+    string testuojamasFile = filePasirinkimas();
     double visasLaikas = 0.0;
     vector<string> visaeil;
     Stud studentas;
@@ -219,18 +256,18 @@ void fileskait(vector<Stud> &studentai, int testavimas)
     ifstream f;
     std::stringstream bufferis;
 
-    if (testavimas == 0)
+    /*if (testavimas == 0)
         f.open("kursiokai.txt");
     else if (testavimas == 1)
         f.open("studentai10000.txt");
     else if (testavimas == 2)
         f.open("studentai100000.txt");
     else if (testavimas == 3)
-        f.open("studentai1000000.txt");
-
+        f.open("studentai1000000.txt");*/
+    f.open(testuojamasFile);//atsidarau file su kuriuo viska testuosiu
     int iteracijos;
 
-    (testavimas == 0) ? iteracijos = 0 : iteracijos = 2;
+    (testuojamasFile == "kursiokai.txt") ? iteracijos = 0 : iteracijos = 2; //reikia kazkaip sita pataisyt kad jeigu su kuriokais tai nedarytu tu 3 iteraciju bet galimai i kita funckija sita riekes idet
 
     for (int i = 0; i <= iteracijos; i++)
     {
@@ -268,12 +305,12 @@ void fileskait(vector<Stud> &studentai, int testavimas)
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> diff = end - start;
         visasLaikas += diff.count();
-        if (testavimas > 0 && testavimas <= 3)
+        if (testuojamasFile != "kursiokai.txt")
         {
             cout << i + 1 << " iteracija: " << std::fixed << std::setprecision(3) << diff.count() << "s" << endl;
         }
     }
-    if (testavimas > 0 && testavimas <= 3)
+    if (testuojamasFile != "kursiokai.txt")
     {
         cout << "Programos vidutinis vykdymo laikas: " << std::fixed << std::setprecision(3) << visasLaikas / 3 << "s" << endl;
     }
@@ -356,45 +393,3 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
     }
 }
 
-string filePasirinkimas()
-{
-    system("dir /b *.txt > temp.txt"); //reikia vienos rodykles nes tada ne apendina bet overwritina
-    ifstream f;
-    string eilute;
-    int sumaeil = 0;
-    int pasirinkimas;
-    vector<string> txtfiles;
-    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt"}; // temp.txt reikes isdelintint pries dedant i file arba i vektoriu itraukti
-    f.open("temp.txt");
-    while (getline(f, eilute))
-    {   bool pasikartojantis;
-        for (int a = 1; a <= nenorimiFiles.size(); a++)
-        {
-            if (eilute != nenorimiFiles[a - 1])
-            {
-                pasikartojantis = false;
-            }
-            else
-            {
-                pasikartojantis = true;
-                break;
-            }
-        }
-        if (!pasikartojantis)
-        {
-            txtfiles.push_back(eilute);
-        }
-    }
-    f.close();
-    system("del temp.txt");
-    cout << "Pasirinkite file: " << endl;
-    int a = 1;
-
-    for (int i = 0; i < txtfiles.size(); i++)
-    {
-        cout << txtfiles[i] << " |" << i+1 << " pasirinkimas" << endl;
-    }
-    cin >> pasirinkimas;
-    return txtfiles[pasirinkimas -1];
-    // returna reikes padaryti
-}
