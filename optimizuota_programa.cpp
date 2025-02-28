@@ -65,8 +65,7 @@ int main()
         while (true)
         {
             try
-            {
-                cin >> printinimas;
+            {   cin >> printinimas;
                 if (cin.fail())
                 {
                     cin.clear();
@@ -116,8 +115,6 @@ int main()
         break;
     }
     case 5:
-    {
-        return 0;
-    }
+    {   return 0;}
     }
 }
