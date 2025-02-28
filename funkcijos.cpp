@@ -63,7 +63,7 @@ void pazymiu_ivedimas(Stud &studentas)
     {
         int paz;
         cin >> paz;
-        while (tinkamas_int(paz) == false)
+        while (tinkamas_int(paz) == false || cin.fail() ) 
         {
             cout << "Iveskite teisinga pazymi" << endl;
             cin >> paz;
@@ -262,7 +262,7 @@ string filePasirinkimas()
 
 void fileskait(vector<Stud> &studentai)
 {
-    string testuojamasFile = filePasirinkimas();
+    
     double visasLaikas = 0.0;
     vector<string> visaeil;
     Stud studentas;
@@ -279,10 +279,12 @@ void fileskait(vector<Stud> &studentai)
         f.open("studentai100000.txt");
     else if (testavimas == 3)
         f.open("studentai1000000.txt");*/
+    string testuojamasFile = filePasirinkimas();
+    cout<< testuojamasFile << endl;
     f.open(testuojamasFile);//atsidarau file su kuriuo viska testuosiu
     int iteracijos;
 
-    (testuojamasFile == "kursiokai.txt") ? iteracijos = 0 : iteracijos = 2; //reikia kazkaip sita pataisyt kad jeigu su kuriokais tai nedarytu tu 3 iteraciju bet galimai i kita funckija sita riekes idet
+    (testuojamasFile == "kursiokai.txt") ? iteracijos = 0 : iteracijos = 2; 
 
     for (int i = 0; i <= iteracijos; i++)
     {
@@ -354,23 +356,23 @@ bool PalygintiBalaVid(Stud stud1, Stud stud2)
 void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
 {
     int SkaiciuotiPagal;
-    while (true) {
-        try {
-            cout << "Galutinis balas skaiciuojamas pagal:" << endl;
-            cout << "1 - mediana\n";
-            cout << "2 - vidurki\n";
-            cin >> SkaiciuotiPagal;
+    //while (true) {
+        //try {
+    cout << "Galutinis balas skaiciuojamas pagal:" << endl;
+    cout << "1 - mediana\n";
+    cout << "2 - vidurki\n";
+    cin >> SkaiciuotiPagal;
 
-            if (SkaiciuotiPagal != 1 && SkaiciuotiPagal != 2) {
+            /*if (SkaiciuotiPagal != 1 && SkaiciuotiPagal != 2) {
                 throw SkaiciuotiPagal; 
-            }
+            }*/
 
-            break; 
-        } 
-        catch (int skaicius) {
-            cout << "Iveskite teisinga skaiciu (1 arba 2)\n";
-        }
-    }
+            //break; 
+        //} 
+        //catch (int skaicius) {
+          //  cout << "Iveskite teisinga skaiciu (1 arba 2)\n";
+        //}
+    //}
     std::ostream *out;
     std::ofstream f;
     f.open("isvedimas.txt");

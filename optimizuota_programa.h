@@ -28,7 +28,6 @@ using std::sort;
 using std::streamsize;
 using std::string;
 using std::vector;
-using std::cerr; //naujas inludas
 
 struct Stud
 {
