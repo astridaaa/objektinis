@@ -15,19 +15,20 @@ int main()
         try
         {
             cin >> meniu;
-            if(cin.fail()){
-                cin.clear();  
+            if (cin.fail())
+            {
+                cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 throw "Neteisingas pasirinkimas, iveskite skaiciu 1-5";
             }
-            if (meniu > 5 || meniu < 1) 
-            { 
+            if (meniu > 5 || meniu < 1)
+            {
                 throw "Neteisingas pasirinkimas, iveskite skaiciu 1-5";
             }
-            
+
             break;
         }
-        catch (const char* masyvas)
+        catch (const char *masyvas)
         {
             cout << masyvas << endl;
         }
@@ -61,45 +62,51 @@ int main()
         int printinimas;
         fileskait(visi);
         cout << "Duomenis isvesti terminale - 1, duomenis isvesti faile - 2" << endl;
-        cin >> printinimas;
-        /*while (true)
-    {
-        try
+        while (true)
         {
-            
-
-            if (printinimas != 1 || printinimas != 2)// idet kad jei ir nera skaicius
-            { 
-                throw printinimas;
+            try
+            {
+                cin >> printinimas;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw "Neteisingas pasirinkimas, iveskite skaiciu 1 arba 2";
+                }
+                if (printinimas != 1 || printinimas != 2)
+                {
+                    throw "Neteisingas pasirinkimas, iveskite skaiciu 1 arba 2";
+                }
+                break;
             }
-
-            break;
+            catch (const char *masyvas)
+            {
+                cout << masyvas << endl;
+            }
         }
-        catch (int printinimas)
-        {
-            cout << "Iveskite teisinga skaiciu (1 arba 2)\n";
-        }
-    }*/
         cout << "Duomenys rusiuojami pagal: 1 - vardus; 2 - pavardes; 3 - galutinius balus; 4 - duomenys nera rusiuojami " << endl;
-        cin >> rusiavimas;
-        /*while (true)
-    {
-        try
+        while (true)
         {
-            
-
-            if (rusiavimas < 1 || rusiavimas > 4)// idet kad jei ir nera skaicius
-            { 
-                throw rusiavimas;
+            try
+            {
+                cin >> rusiavimas;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw "Neteisingas pasirinkimas, iveskite skaiciu nuo 1 iki 4";
+                }
+                if (rusiavimas > 4 || rusiavimas < 1)
+                {
+                    throw "Neteisingas pasirinkimas, iveskite skaiciu nuo 1 iki 4";
+                }
+                break;
             }
-
-            break;
+            catch (const char *masyvas)
+            {
+                cout << masyvas << endl;
+            }
         }
-        catch (int rusiavimas)
-        {
-            cout << "Iveskite teisinga skaiciu (nuo 1 iki 4)\n";
-        }
-    }*/
         if (printinimas == 1)
         {
             print(visi, false, rusiavimas);
