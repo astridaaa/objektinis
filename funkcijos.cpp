@@ -30,9 +30,13 @@ double galutinis(Stud studentas, int PagalSkaiciavimas)
     if (PagalSkaiciavimas == 0)
     {
         double med;
-        sort(studentas.nd.begin(), studentas.nd.end());
-        if (studentas.nd.size() % 2 == 0)
+        if(studentas.nd.size() == 1){
+            med = studentas.nd[0];
+        }
+        
+        else if (studentas.nd.size() % 2 == 0)
         {
+            sort(studentas.nd.begin(), studentas.nd.end());
             med = (studentas.nd[studentas.nd.size() / 2 - 1] + studentas.nd[studentas.nd.size() / 2]) / 2;
         }
         else
@@ -45,12 +49,18 @@ double galutinis(Stud studentas, int PagalSkaiciavimas)
     {
         double vidurkis;
         double suma{0.0};
-        for (size_t ss = 0; ss < studentas.nd.size(); ss++)
+        if(studentas.nd.size() == 1){
+            vidurkis = studentas.nd[0];
+        }
+        else{
+            for (size_t ss = 0; ss < studentas.nd.size(); ss++)
         {
             suma += studentas.nd[ss];
         }
 
         vidurkis = suma / studentas.nd.size();
+        
+    }
         return round((0.4 * vidurkis + 0.6 * studentas.egzaminas) * 100) / 100;
     }
 }
@@ -61,20 +71,39 @@ void pazymiu_ivedimas(Stud &studentas)
     cout << "Iveskite studento pazymius (-i), baige iveskite 0" << endl;
     do
     {
-        int paz;
-        cin >> paz;
-        while (tinkamas_int(paz) == false || cin.fail() ) 
+        while (true)
         {
-            cout << "Iveskite teisinga pazymi" << endl;
-            cin >> paz;
+            try
+            {
+                int paz;
+                cin >> paz;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw "Neteisingas ivestas skaicius";
+                }
+                if (tinkamas_int(paz) == false)
+                {
+                    throw "Neteisingai ivestas skaicius";
+                }
+                if(paz == 0 && studentas.nd.empty()){
+                    throw "Iveskite bent viena pazymi";
+                }
+                if (paz == 0)
+                {
+                    stop1 = true;
+                }
+                else
+                    studentas.nd.push_back(paz);
+                break;
+            }
+            catch (const char *masyvas)
+            {
+                cout << masyvas << endl;
+            }
         }
 
-        if (paz == 0)
-        {
-            stop1 = true;
-        }
-        else
-            studentas.nd.push_back(paz);
     } while (!stop1);
 }
 
@@ -143,38 +172,74 @@ void duomenu_ivedimas(vector<Stud> &studentai, int meniu)
     do
     {
         Stud studentas;
-
         if (meniu == 1 || meniu == 2)
         {
             cout << "Iveskite studento varda, baige iveskite 'stop'" << endl;
-            getline(cin, studentas.vardas);
-            while (tinkamas_char(studentas.vardas) == false)
+
+            while (true)
             {
-                cout << "Iveskite tinkama varda" << endl;
-                getline(cin, studentas.vardas);
+                try
+                {
+                    getline(cin, studentas.vardas);
+                    if (tinkamas_char(studentas.vardas) == false)
+                    {
+                        cin.clear();
+                        throw "Neteisingai ivedete studento varda";
+                    }
+                    break;
+                }
+                catch (const char *masyvas)
+                {
+                    cout << masyvas << endl;
+                }
             }
             if (studentas.vardas == "stop")
             {
                 stop = true;
                 break;
             }
-
             cout << "Iveskite studento pavarde" << endl;
-            getline(cin, studentas.pavarde);
-            while (tinkamas_char(studentas.pavarde) == false)
+            while (true)
             {
-                cout << "Iveskite tinkama pavarde" << endl;
-                getline(cin, studentas.pavarde);
+                try
+                {
+                    getline(cin, studentas.pavarde);
+                    if (tinkamas_char(studentas.pavarde) == false)
+                    {
+                        cin.clear();
+                        throw "Neteisingai ivedete studento pavarde";
+                    }
+                    break;
+                }
+                catch (const char *masyvas)
+                {
+                    cout << masyvas << endl;
+                }
             }
             cout << "Iveskite egzamino bala" << endl;
-            cin >> studentas.egzaminas;
-            while (tinkamas_int(studentas.egzaminas) == false)
+            while (true)
             {
-                cout << "Iveskite teisinga egzamino rezultata" << endl;
-                cin >> studentas.egzaminas;
+                try
+                {
+                    cin >> studentas.egzaminas;
+                    if (cin.fail())
+                    {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        throw "Iveskite skaiciu";
+                    }
+                    if (tinkamas_int(studentas.egzaminas) == false)
+                    {
+                        throw "Iveskite teisinga pazymi";
+                    }
+                    break;
+                }
+                catch (const char *masyvas)
+                {
+                    cout << masyvas << endl;
+                }
             }
         }
-
         if (meniu == 1)
         {
             pazymiu_ivedimas(studentas);
@@ -205,16 +270,17 @@ void duomenu_generavimas(vector<Stud> &studentai)
 
 string filePasirinkimas()
 {
-    system("dir /b *.txt > temp.txt"); 
+    system("dir /b *.txt > temp.txt");
     ifstream f;
     string eilute;
     int pasirinkimuSUM = 0;
     int pasirinkimas;
     vector<string> txtfiles;
-    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt"}; 
+    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt"};
     f.open("temp.txt");
     while (getline(f, eilute))
-    {   bool pasikartojantis;
+    {
+        bool pasikartojantis;
         for (int a = 1; a <= nenorimiFiles.size(); a++)
         {
             if (eilute != nenorimiFiles[a - 1])
@@ -238,31 +304,39 @@ string filePasirinkimas()
 
     for (int i = 0; i < txtfiles.size(); i++)
     {
-        cout << txtfiles[i] << " |" << i+1 << " pasirinkimas" << endl;
+        cout << txtfiles[i] << " |" << i + 1 << " pasirinkimas" << endl;
         pasirinkimuSUM += 1;
     }
-    while(true){
-        try {
-            cout << "Pasirinkite file: " << endl;
+    cout << "Pasirinkite file: " << endl;
+    while (true)
+    {
+        try
+        {
             cin >> pasirinkimas;
-
-            if (pasirinkimas < 1 || pasirinkimas > pasirinkimuSUM) {
-                throw pasirinkimas; 
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw "Neteisingas pasirinkimas";
             }
-
-            break; 
-        } 
-        catch (int pasirinkimas) {
-            cout << "Iveskite teisinga skaiciu (nuo 1 iki " << pasirinkimuSUM << ")" << endl;
+            if (pasirinkimas > pasirinkimuSUM || pasirinkimas < 1)
+            {
+                throw "Neteisingas pasirinkimas";
+            }
+            break;
+        }
+        catch (const char *masyvas)
+        {
+            cout << masyvas << endl;
         }
     }
-    
-    return txtfiles[pasirinkimas -1];
+
+    return txtfiles[pasirinkimas - 1];
 }
 
 void fileskait(vector<Stud> &studentai)
 {
-    
+
     double visasLaikas = 0.0;
     vector<string> visaeil;
     Stud studentas;
@@ -270,29 +344,18 @@ void fileskait(vector<Stud> &studentai)
     string eilute;
     ifstream f;
     std::stringstream bufferis;
-
-    /*if (testavimas == 0)
-        f.open("kursiokai.txt");
-    else if (testavimas == 1)
-        f.open("studentai10000.txt");
-    else if (testavimas == 2)
-        f.open("studentai100000.txt");
-    else if (testavimas == 3)
-        f.open("studentai1000000.txt");*/
     string testuojamasFile = filePasirinkimas();
-    cout<< testuojamasFile << endl;
-    f.open(testuojamasFile);//atsidarau file su kuriuo viska testuosiu
+    cout << testuojamasFile << endl;
+    f.open(testuojamasFile); // atsidarau file su kuriuo viska testuosiu
     int iteracijos;
 
-    (testuojamasFile == "kursiokai.txt") ? iteracijos = 0 : iteracijos = 2; 
+    (testuojamasFile == "kursiokai.txt") ? iteracijos = 0 : iteracijos = 2;
 
     for (int i = 0; i <= iteracijos; i++)
     {
-
         studentai.clear();
         bufferis.str("");
         bufferis.clear();
-
         auto start = std::chrono::high_resolution_clock::now();
         bufferis << f.rdbuf();
         f.close();
@@ -356,23 +419,32 @@ bool PalygintiBalaVid(Stud stud1, Stud stud2)
 void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
 {
     int SkaiciuotiPagal;
-    //while (true) {
-        //try {
-    cout << "Galutinis balas skaiciuojamas pagal:" << endl;
-    cout << "1 - mediana\n";
-    cout << "2 - vidurki\n";
-    cin >> SkaiciuotiPagal;
+    cout << "Galutinis balas skaiciuojamas pagal: 1 - mediana, 2 - vidurkis" << endl;
+    while (true)
+    {
+        try
+        {
+            int sk;
+            cin >> sk;
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw "Neteisingas pasirinkimas, iveskite skaiciu 1 arba 2";
+            }
+            if (sk != 1 && sk != 2)
+            {
+                throw "Neteisingas pasirinkimas, iveskite skaiciu 1 arba 2";
+            }
+            SkaiciuotiPagal = sk;
+            break;
+        }
+        catch (const char *masyvas)
+        {
+            cout << masyvas << endl;
+        }
+    }
 
-            /*if (SkaiciuotiPagal != 1 && SkaiciuotiPagal != 2) {
-                throw SkaiciuotiPagal; 
-            }*/
-
-            //break; 
-        //} 
-        //catch (int skaicius) {
-          //  cout << "Iveskite teisinga skaiciu (1 arba 2)\n";
-        //}
-    //}
     std::ostream *out;
     std::ofstream f;
     f.open("isvedimas.txt");
@@ -381,12 +453,10 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
     {
         out = &f;
     }
-
     else
     {
         out = &cout;
     }
-
     if (RusiavimasPagal == 1)
     {
         sort(visi.begin(), visi.end(), PalygintiVardas);
@@ -422,4 +492,3 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
         }
     }
 }
-
