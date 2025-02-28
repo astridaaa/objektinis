@@ -536,3 +536,9 @@ void GeneruotiFiles(int StudSkaicius){
     f << BufferisTest.str();
     f.close();
 }
+
+void tyrimai(int pasirinkimasTyrimo){
+    /*for(int i : 5){
+        cout << i;
+    }*/
+}

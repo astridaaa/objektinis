@@ -31,3 +31,5 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal);
 string filePasirinkimas();
 
 void GeneruotiFiles(int StudSkaicius);
+
+void tyrimai(int pasirinkimasTyrimo);

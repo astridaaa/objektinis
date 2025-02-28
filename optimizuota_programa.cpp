@@ -65,7 +65,8 @@ int main()
         while (true)
         {
             try
-            {   cin >> printinimas;
+            {
+                cin >> printinimas;
                 if (cin.fail())
                 {
                     cin.clear();
@@ -116,16 +117,24 @@ int main()
     }
     case 5:
     {
-        GeneruotiFiles(10);
-    }
+        
 
-
-
-
+        int tyrimoPasirinkimas;
+        cout << "1- tyrimas 1, 2- tyrimas 2\n";
+        cin >> tyrimoPasirinkimas;
 
 
 
     case 6:
-    {   return 0;}
+    {
+        return 0;
+    }
     }
 }
+        /*if (tyrimoPasirinkimas == 1)
+        {
+        }
+        if (tyrimoPasirinkimas == 2)
+        {
+        }
+    }*/
