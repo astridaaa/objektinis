@@ -514,23 +514,26 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
 }
 
 double GeneruotiFiles(int StudSkaicius){
+    std::random_device rd;
+    std::mt19937 mt(rd()); 
+    std::uniform_int_distribution<int> dist(1, 10);
     string FileName = "Studentai" +  std::to_string(StudSkaicius) + ".txt" ;
     std::stringstream BufferisTest;
     std::ofstream f;
     f.open(FileName);
-    int pazSk = rand() % 20 +1;
+    int pazSk = dist(mt);
      auto start = std::chrono::high_resolution_clock::now(); //pradedu laika matoti
-    BufferisTest << std::setw(15) << std::left << "Vardas" << std::setw(15) << std::left << "Pavarde" << std::setw(15) << std::left;
+    BufferisTest << std::setw(16) << std::left << "Vardas" << std::setw(16) << std::left << "Pavarde" << std::setw(16) << std::left;
     for(int j = 1; j <= pazSk; j++){
         if(j != pazSk ){
-            BufferisTest << "ND" + std::to_string(j) << std:: setw(15) << std::left;
+            BufferisTest << "ND" + std::to_string(j) << std:: setw(16) << std::left;
         }
         else BufferisTest << "EG rez." << endl;
     }
     for(int i = 1; i <= StudSkaicius; i++){
-        BufferisTest << std::setw(15) << std::left << "Vardas" + std::to_string(i) << std:: setw(15) << std::left << "Pavarde" + std::to_string(i) << std:: setw(15) << std::left;
+        BufferisTest << std::setw(16) << std::left << "Vardas" + std::to_string(i) << std:: setw(16) << std::left << "Pavarde" + std::to_string(i) << std:: setw(16) << std::left;
     for(int j = 1; j <= pazSk; j++){
-        BufferisTest << rand() % 10 +1 << std::setw(15) << std::left;
+        BufferisTest << dist(mt) << std::setw(16) << std::left;
     }
     BufferisTest << endl;
     }
@@ -555,17 +558,9 @@ void tyrimai(int pasirinkimasTyrimo)
                 cout << i + 1 << " iteracija: " << s << "s"<< endl;
                 laikas += s;
             }
-            cout << "Studentai" << a << " vidutiniskai generuoja: " << laikas / 3 << "s" << endl;
+            cout << "Studentai" << a << ".txt vidutiniskai generuoja: " << laikas / 3 << "s" << endl;
             cout << "...\n";
         }
     }
 }
 
-//sukuriu 5 files => 
-//startuoju du laikus (vienas rodys kiek laiko uztrunka tris kartus parunnint tik i bufferi ir tada breakina, o kitas skaiciuoja toliau)
-//kiekviena po tris kartus ir paimu kiek laiko uztruko TIK IDEIT I BUFERI viska
-//duomenis pradedu det i vektorius (naudoju galutinio funckija ir jei maziau daugiau 5 skirstau kaip reikia)
-//Stud visidaug5 ir visimaz5 pagal galutini bala
-//i du atskirus files vedu abu vektorius
-//is pradziu pakuriu tyrima pirma ir jei is pat pradziu buvo pasirinktas pirmas galo su if statement if ==2 nedarau ir tik ta laika matuoju jei ne pisu toliau
-//pagal tai coutinu laika

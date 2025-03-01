@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
+#include <random>
 
 using std::cin;
 using std::cout;
