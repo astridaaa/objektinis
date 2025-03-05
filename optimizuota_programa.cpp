@@ -3,13 +3,7 @@
 
 int main()
 {
-    double laikas10;
-    double laikas100;
-    double laikas1000;
-    double laikas10000;
-    double laikas100000;
-    double laikas1000000;
-    double laikas10000000;
+
     int meniu;
     int paz;
     string testavimui;
