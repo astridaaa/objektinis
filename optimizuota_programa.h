@@ -36,6 +36,6 @@ struct Stud
     string vardas, pavarde;
     int egzaminas;
     vector<int> nd;
-    double BalasGalutinisMed;
+    //double BalasGalutinisMed;
     double BalasGalutinisVid;
 };

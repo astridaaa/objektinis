@@ -279,7 +279,7 @@ string filePasirinkimas()
     int pasirinkimuSUM = 0;
     int pasirinkimas;
     vector<string> txtfiles;
-    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt"};
+    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt", "Studentai10000000.txt", "Pirmunai1000.txt", "Pirmunai10000.txt", "Pirmunai100000.txt", "Pirmunai1000000.txt", "Pirmunai10000000.txt", "Nesimokantys1000.txt", "Nesimokantys10000.txt", "Nesimokantys100000.txt", "Nesimokantys1000000.txt", "Nesimokantys10000000.txt"  };
     f.open("temp.txt");
     while (getline(f, eilute))
     {
@@ -337,18 +337,29 @@ string filePasirinkimas()
     return txtfiles[pasirinkimas - 1];
 }
 
-void fileskait(vector<Stud> &studentai)
+void fileskait(vector<Stud> &studentai, bool a, string filePav)
 {
-
+    // TRUE - testavimas, FALSE - nuskaitymas is file su file pasirinkiams
     double visasLaikas = 0.0;
     vector<string> visaeil;
     Stud studentas;
     int pazymys;
     string eilute;
+    string eilute1;
     ifstream f;
     std::stringstream bufferis;
-    string testuojamasFile = filePasirinkimas();
+    string testuojamasFile;
+    if (a == false)
+    {
+        testuojamasFile = filePasirinkimas();
+    }
+    if (a == true)
+    {
+        testuojamasFile = filePav;
+    }
+    cout << "...\n";
     cout << testuojamasFile << endl;
+    
     f.open(testuojamasFile); // atsidarau file su kuriuo viska testuosiu
     while (true)
     {
@@ -369,7 +380,7 @@ void fileskait(vector<Stud> &studentai)
 
     int iteracijos;
 
-    (testuojamasFile == "kursiokai.txt") ? iteracijos = 0 : iteracijos = 2;
+    (testuojamasFile == "kursiokai.txt") ? iteracijos = 0 : iteracijos = 1;
 
     for (int i = 0; i <= iteracijos; i++)
     {
@@ -379,6 +390,7 @@ void fileskait(vector<Stud> &studentai)
         auto start = std::chrono::high_resolution_clock::now();
         bufferis << f.rdbuf();
         f.close();
+        getline(bufferis, eilute1);
         while (bufferis)
         {
             if (!bufferis.eof())
@@ -389,7 +401,8 @@ void fileskait(vector<Stud> &studentai)
             else
                 break;
         }
-        for (string s : visaeil)
+
+        for (string s : visaeil) // SKAITO PIRMA MANO BLOGA EILUTE
         {
             std::istringstream f(s);
             f >> studentas.vardas >> studentas.pavarde;
@@ -400,40 +413,54 @@ void fileskait(vector<Stud> &studentai)
             }
             studentas.egzaminas = studentas.nd.back();
             studentas.nd.pop_back();
+            studentas.BalasGalutinisVid = galutinis(studentas, 1);
             studentai.push_back(studentas);
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> diff = end - start;
         visasLaikas += diff.count();
-        if (testuojamasFile != "kursiokai.txt")
+        if (testuojamasFile != "kursiokai.txt" && a == false)
         {
             cout << i + 1 << " iteracija: " << std::fixed << std::setprecision(3) << diff.count() << "s" << endl;
         }
     }
     if (testuojamasFile != "kursiokai.txt")
     {
-        cout << "Programos vidutinis vykdymo laikas: " << std::fixed << std::setprecision(3) << visasLaikas / 3 << "s" << endl;
+        if (a == false)
+        {
+            cout << "Programos vidutinis vykdymo laikas: " << std::fixed << std::setprecision(3) << visasLaikas / 3 << "s" << endl;
+        }
+        if (a == true)
+        {
+            cout << "Nuskaitymas is failo vidutiniskai truko: " << std::fixed << std::setprecision(3) << visasLaikas / 3 << "s" << endl;
+        }
+        
     }
 }
 
-bool PalygintiVardas(Stud stud1, Stud stud2)
+bool PalygintiVardas(Stud &stud1, Stud &stud2)
 {
     return stud1.vardas < stud2.vardas;
 }
 
-bool PalygintiPavardes(Stud stud1, Stud stud2)
+bool PalygintiPavardes(Stud &stud1, Stud &stud2)
 {
     return stud1.pavarde < stud2.pavarde;
 }
 
-bool PalygintiBalaMed(Stud stud1, Stud stud2)
+bool PalygintiBalaMed(Stud &stud1, Stud &stud2)
 {
     return galutinis(stud1, 0) > galutinis(stud2, 0);
 }
 
-bool PalygintiBalaVid(Stud stud1, Stud stud2)
+bool PalygintiBalaVid(Stud &stud1, Stud &stud2)
 {
     return galutinis(stud1, 1) > galutinis(stud2, 1);
+}
+
+bool PalygintiKategorijas(Stud &stud1, Stud &stud2)
+{
+    return stud1.BalasGalutinisVid > stud2.BalasGalutinisVid;
 }
 
 void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
@@ -513,35 +540,144 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
     }
 }
 
-double GeneruotiFiles(int StudSkaicius){
+double GeneruotiFiles(int StudSkaicius)
+{
     std::random_device rd;
-    std::mt19937 mt(rd()); 
+    std::mt19937 mt(rd());
     std::uniform_int_distribution<int> dist(1, 10);
-    string FileName = "Studentai" +  std::to_string(StudSkaicius) + ".txt" ;
+    string FileName = "Studentai" + std::to_string(StudSkaicius) + ".txt";
     std::stringstream BufferisTest;
     std::ofstream f;
     f.open(FileName);
     int pazSk = dist(mt);
-     auto start = std::chrono::high_resolution_clock::now(); //pradedu laika matoti
+    auto start = std::chrono::high_resolution_clock::now(); // pradedu laika matoti
     BufferisTest << std::setw(16) << std::left << "Vardas" << std::setw(16) << std::left << "Pavarde" << std::setw(16) << std::left;
-    for(int j = 1; j <= pazSk; j++){
-        if(j != pazSk ){
-            BufferisTest << "ND" + std::to_string(j) << std:: setw(16) << std::left;
+    for (int j = 1; j <= pazSk; j++)
+    {
+        if (j != pazSk)
+        {
+            BufferisTest << "ND" + std::to_string(j) << std::setw(16) << std::left;
         }
-        else BufferisTest << "EG rez." << endl;
+        else
+            BufferisTest << "EG rez." << endl;
     }
-    for(int i = 1; i <= StudSkaicius; i++){
-        BufferisTest << std::setw(16) << std::left << "Vardas" + std::to_string(i) << std:: setw(16) << std::left << "Pavarde" + std::to_string(i) << std:: setw(16) << std::left;
-    for(int j = 1; j <= pazSk; j++){
-        BufferisTest << dist(mt) << std::setw(16) << std::left;
-    }
-    BufferisTest << endl;
+    // duomenys generuojami
+    for (int i = 1; i <= StudSkaicius; i++)
+    {
+        BufferisTest << std::setw(16) << std::left << "Vardas" + std::to_string(i) << std::setw(16) << std::left << "Pavarde" + std::to_string(i) << std::setw(16) << std::left;
+        for (int j = 1; j <= pazSk; j++)
+        {
+            BufferisTest << dist(mt) << std::setw(16) << std::left;
+        }
+        if (i != StudSkaicius)
+        {
+            BufferisTest << endl;
+        }
     }
     f << BufferisTest.rdbuf();
     f.close();
     auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff = end - start; //gaunu skirtuma kiek vienam failui uztruko laiko sugeneruot
+    std::chrono::duration<double> diff = end - start; // gaunu skirtuma kiek vienam failui uztruko laiko sugeneruot
     return diff.count();
+}
+
+void vectorIdejimas(int studSkaicius, vector<Stud> &pirmunai, vector<Stud> &nesimokantys)
+{
+    string file = "Studentai" + std::to_string(studSkaicius) + ".txt";
+    vector<Stud> studentaiTest; // viska pridejineju i sita vektoriu
+    fileskait(studentaiTest, true, file);
+
+    double visasLaikas1;
+    // jau antra funckija
+    for (int c = 0; c < 2; c++)
+    { // double laikas1;
+        auto start1 = std::chrono::high_resolution_clock::now();
+        for (Stud j : studentaiTest)
+        {
+            if (j.BalasGalutinisVid >= 5)
+            {
+                pirmunai.push_back(j);
+            }
+            else
+                nesimokantys.push_back(j);
+        }
+        auto end1 = std::chrono::high_resolution_clock::now();
+        studentaiTest.clear();
+        std::chrono::duration<double> diff1 = end1 - start1;
+        visasLaikas1 += diff1.count();
+    }
+    cout << "Duomenu isskirstymas i dvi grupes vidutiniskai trunka: " << visasLaikas1 / 3 << "s\n";
+
+}
+
+// SUGENERUOJA IS KARTO FILES
+// ANTRM BUTINAI KAD BUTU FILES REIKIA PADARYTI PIRMA FUNKCIJA TRY AND CATCH KAD JEI NETYCIA NEBUTU SUGENERUOTA TOKS FILE
+
+void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int RusiavimasPagal)
+{
+    string FILEMOK = "Pirmunai" + std::to_string(a) + ".txt";
+    string FILENESIMOK = "Nesimokantys" + std::to_string(a) + ".txt";
+    std::stringstream buferis;
+    std::ofstream f, F;
+    f.open(FILEMOK);
+    
+    if (RusiavimasPagal == 1)
+    {
+        auto t1 = std::chrono::high_resolution_clock::now();
+        sort(nesimokantys.begin(), nesimokantys.end(), PalygintiVardas);
+        sort(pirmunai.begin(), pirmunai.end(), PalygintiVardas);
+        auto t2 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> difft = t2 - t1;
+        cout << "Rusiavimas uztruko: " << difft.count() << "s" << endl;
+  
+    }
+    else if (RusiavimasPagal == 2)
+    {   auto t1 = std::chrono::high_resolution_clock::now();
+        sort(nesimokantys.begin(), nesimokantys.end(), PalygintiPavardes);
+        sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
+        auto t2 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> difft = t2 - t1;
+        cout << "Rusiavimas uztruko: " << difft.count() << "s" << endl;
+     
+    }
+    else if (RusiavimasPagal == 3)
+    {   auto t1 = std::chrono::high_resolution_clock::now();
+        sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
+        sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
+        auto t2 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> difft = t2 - t1;
+        cout << "Rusiavimas uztruko: " << difft.count() << "s" << endl;
+
+    }
+
+    auto start2 = std::chrono::high_resolution_clock::now();
+    buferis << std::setw(16) << std::left << "Pavarde" << std::setw(16) << std::left << "Vardas" << std::setw(16) << std::left << "Galutinis (Vid.)\n";
+    buferis << "----------------------------------------------------" << endl;
+    for (Stud j : pirmunai)
+    {
+        buferis << std::setw(16) << std::left << j.pavarde << std::setw(16) << std::left << j.vardas << std::setw(16) << std::fixed << std::setprecision(2) << j.BalasGalutinisVid << endl;
+    }
+
+    f << buferis.rdbuf();
+    buferis.str("");
+    buferis.clear();
+    f.close();
+
+    f.open(FILENESIMOK);
+    buferis << std::setw(16) << std::left << "Pavarde" << std::setw(16) << std::left << "Vardas" << std::setw(16) << std::left << "Galutinis (Vid.)\n";
+    buferis << "----------------------------------------------------" << endl;
+    for (Stud j : nesimokantys)
+    {
+        buferis << std::setw(16) << std::left << j.pavarde << std::setw(16) << std::left << j.vardas << std::setw(16) << std::fixed << std::setprecision(2) << j.BalasGalutinisVid << endl;
+    }
+
+    f << buferis.rdbuf();
+    f.close();
+    auto end2 = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double> diff2 = end2 - start2;
+    cout << "Failus uztruko isvesti: " << diff2.count() << "s" << endl;
+  
 }
 
 void tyrimai(int pasirinkimasTyrimo)
@@ -552,15 +688,36 @@ void tyrimai(int pasirinkimasTyrimo)
         {
             cout << "Studentai" << a << ".txt\n";
             double laikas = 0.0;
-            for (int i = 0; i < 3; i++)
-            {   
+            for (int i = 0; i < 2; i++)
+            {
                 double s = GeneruotiFiles(a);
-                cout << i + 1 << " iteracija: " << s << "s"<< endl;
+                cout << i + 1 << " iteracija: " << s << "s" << endl;
                 laikas += s;
             }
-            cout << "Studentai" << a << ".txt vidutiniskai generuoja: " << laikas / 3 << "s" << endl;
+            cout << "Studentai" << a << ".txt vidutiniskai generuoja: " << laikas / 2 << "s" << endl;
             cout << "...\n";
         }
     }
-}
 
+    if (pasirinkimasTyrimo == 2)
+    {
+        int RusiavimasPagal;
+        cout << "Studentus rusiuoti pagal: 1 - vardus, 2 - pavardes, 3 - galutini bala, 4 - duomenu nerusiuoti\n";
+        cin >> RusiavimasPagal;
+
+        for (int a = 1000; a <= 10000000; a *= 10)
+        {
+            vector<Stud> pirmunai;
+            vector<Stud> nesimokantys;
+            //auto t4 = std::chrono::high_resolution_clock::now();
+            //cia loopina du kartus ir loopinima isimti is visu kitu funkciju
+            vectorIdejimas(a, pirmunai, nesimokantys);
+            PrintVektorius(nesimokantys, pirmunai, a, RusiavimasPagal);
+            //auto t3 = std::chrono::high_resolution_clock::now();
+            //std::chrono::duration<double> diffas = t3 - t4;
+            cout << "Visos programos vykdymo laikas: " << endl;
+            //BendrasLaikas = 0;
+            cout << endl;
+        }
+    }
+}

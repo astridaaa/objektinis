@@ -3,13 +3,14 @@
 
 int main()
 {
+    
     int meniu;
     int paz;
-
+    string testavimui;
     srand(time(NULL));
     vector<Stud> visi;
     int rusiavimas;
-    cout << "Pasirinkite: 1 - duomenys ivedinejami ranka, 2 - pazymiai generuojami, 3 - generuojami visi studentu duomenys, 4 - duomenys nuskaitomi is failo, 5 - generuoti files, 6 - baigti programa" << endl;
+    cout << "Pasirinkite: 1 - duomenys ivedinejami ranka, 2 - pazymiai generuojami, 3 - generuojami visi studentu duomenys, 4 - duomenys nuskaitomi is failo, 5 - atlikti 1 tyrimą/ generuoti files, 6 - atlikti 2 tyrimą, 7 - baigti programa" << endl;
     while (true)
     {
         try
@@ -60,7 +61,7 @@ int main()
     case 4:
     {
         int printinimas;
-        fileskait(visi);
+        fileskait(visi, false, testavimui);
         cout << "Duomenis isvesti terminale - 1, duomenis isvesti faile - 2" << endl;
         while (true)
         {
@@ -117,15 +118,14 @@ int main()
     }
     case 5:
     {
-
-        int tyrimoPasirinkimas;
-        cout << "1- tyrimas 1, 2- tyrimas 2\n";
-        cin >> tyrimoPasirinkimas;
-        tyrimai(tyrimoPasirinkimas);
+        tyrimai(1);
     }
     case 6:
     {
-   return 0;
+        tyrimai(2);
+    }
+    case 7:{
+        return 0;
     }
     
     }
