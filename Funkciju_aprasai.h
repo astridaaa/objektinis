@@ -16,7 +16,7 @@ void duomenu_ivedimas(vector<Stud> &studentai, int meniu);
 
 void duomenu_generavimas(vector<Stud> &studentai);
 
-void fileskait(vector<Stud> &studentai, bool a, string filePav);
+void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasLaikas);
 
 bool PalygintiVardas(Stud &stud1, Stud &stud2);
 
@@ -34,4 +34,6 @@ double GeneruotiFiles(int StudSkaicius); //sukuria files ir returnina per kiek l
 
 void tyrimai(int pasirinkimasTyrimo);
 
-void vectorIdejimas(int studSkaicius);
+void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int RusiavimasPagal, double &BendrasLaikas);
+
+void vectorIdejimas(int studSkaicius, vector<Stud> &pirmunai, vector<Stud> &nesimokantys, double &BendrasLaikas);
