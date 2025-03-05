@@ -394,8 +394,7 @@ void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasL
         }
     }
     int iteracijos;
-    if (testuojamasFile == "kursiokai.txt")
-        ? iteracijos = 0 : iteracijos = 1;
+    (testuojamasFile == "kursiokai.txt") ? iteracijos = 0 : iteracijos = 1;
     for (int i = 0; i <= iteracijos; i++)
     {
         studentai.clear();
@@ -522,7 +521,7 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
         catch (const char *masyvas)
         {
             cout << masyvas << endl;
-            return 0;
+            abort();
         }
     }
 
@@ -678,7 +677,7 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
         catch (const char *masyvas)
         {
             cout << masyvas << endl;
-            return 0;
+            abort();
         }
     }
 
@@ -766,7 +765,7 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
             catch (const char *masyvas)
             {
                 cout << masyvas << endl;
-                return 0;
+                abort();
             }
         }
 
