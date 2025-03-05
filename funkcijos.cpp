@@ -279,7 +279,7 @@ string filePasirinkimas()
     int pasirinkimuSUM = 0;
     int pasirinkimas;
     vector<string> txtfiles;
-    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt", "Studentai10000000.txt", "Pirmunai1000.txt", "Pirmunai10000.txt", "Pirmunai100000.txt", "Pirmunai1000000.txt", "Pirmunai10000000.txt", "Nesimokantys1000.txt", "Nesimokantys10000.txt", "Nesimokantys100000.txt", "Nesimokantys1000000.txt", "Nesimokantys10000000.txt"  };
+    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt", "Studentai10000000.txt", "Pirmunai1000.txt", "Pirmunai10000.txt", "Pirmunai100000.txt", "Pirmunai1000000.txt", "Pirmunai10000000.txt", "Nesimokantys1000.txt", "Nesimokantys10000.txt", "Nesimokantys100000.txt", "Nesimokantys1000000.txt", "Nesimokantys10000000.txt"};
     f.open("temp.txt");
     while (getline(f, eilute))
     {
@@ -359,7 +359,7 @@ void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasL
     }
     cout << "...\n";
     cout << testuojamasFile << endl;
-    
+
     f.open(testuojamasFile); // atsidarau file su kuriuo viska testuosiu
     while (true)
     {
@@ -433,9 +433,8 @@ void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasL
         if (a == true)
         {
             cout << "Nuskaitymas is failo vidutiniskai truko: " << std::fixed << std::setprecision(3) << visasLaikas / 2 << "s" << endl;
-            BendrasLaikas += visasLaikas / 2 ;
+            BendrasLaikas += visasLaikas / 2;
         }
-        
     }
 }
 
@@ -609,11 +608,7 @@ void vectorIdejimas(int studSkaicius, vector<Stud> &pirmunai, vector<Stud> &nesi
     }
     cout << "Duomenu isskirstymas i dvi grupes vidutiniskai trunka: " << visasLaikas1 / 2 << "s\n";
     BendrasLaikas += visasLaikas1 / 2;
-
 }
-
-// SUGENERUOJA IS KARTO FILES
-// ANTRM BUTINAI KAD BUTU FILES REIKIA PADARYTI PIRMA FUNKCIJA TRY AND CATCH KAD JEI NETYCIA NEBUTU SUGENERUOTA TOKS FILE
 
 void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int RusiavimasPagal, double &BendrasLaikas)
 {
@@ -637,7 +632,7 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
         }
 
         cout << "Rusiavimas vidutiniskai uztruko: " << LaikasRusiavimo / 2 << "s" << endl;
-        BendrasLaikas += LaikasRusiavimo /2;
+        BendrasLaikas += LaikasRusiavimo / 2;
     }
     else if (RusiavimasPagal == 2)
     {
@@ -742,12 +737,8 @@ void tyrimai(int pasirinkimasTyrimo)
             double BendrasVidLaikas = 0.0;
             vector<Stud> pirmunai;
             vector<Stud> nesimokantys;
-            //auto t4 = std::chrono::high_resolution_clock::now();
-            //cia loopina du kartus ir loopinima isimti is visu kitu funkciju
-            vectorIdejimas(a, pirmunai, nesimokantys, BendrasVidLaikas );
+            vectorIdejimas(a, pirmunai, nesimokantys, BendrasVidLaikas);
             PrintVektorius(nesimokantys, pirmunai, a, RusiavimasPagal, BendrasVidLaikas);
-            //auto t3 = std::chrono::high_resolution_clock::now();
-            //std::chrono::duration<double> diffas = t3 - t4;
             cout << "Visos programos vykdymo laikas: ";
             cout << BendrasVidLaikas << endl;
             cout << endl;

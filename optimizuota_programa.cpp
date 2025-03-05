@@ -20,11 +20,11 @@ int main()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw "Neteisingas pasirinkimas, iveskite skaiciu 1-6";
+                throw "Neteisingas pasirinkimas, iveskite skaiciu 1-7";
             }
-            if (meniu > 6 || meniu < 1)
+            if (meniu > 7 || meniu < 1)
             {
-                throw "Neteisingas pasirinkimas, iveskite skaiciu 1-6";
+                throw "Neteisingas pasirinkimas, iveskite skaiciu 1-7";
             }
 
             break;
