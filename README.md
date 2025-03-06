@@ -60,3 +60,10 @@ Studentai10000000.txt
 
 
 ![image](https://github.com/user-attachments/assets/aa5d31e6-9084-479b-b00c-d874e13ce019)
+
+
+
+
+
+![image](https://github.com/user-attachments/assets/4673bff9-79bf-4d36-b18c-b4a9ed3b09bd)
+
