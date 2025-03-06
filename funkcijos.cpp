@@ -281,24 +281,6 @@ string filePasirinkimas()
     vector<string> txtfiles;
     vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt", "Studentai10000000.txt", "Pirmunai1000.txt", "Pirmunai10000.txt", "Pirmunai100000.txt", "Pirmunai1000000.txt", "Pirmunai10000000.txt", "Nesimokantys1000.txt", "Nesimokantys10000.txt", "Nesimokantys100000.txt", "Nesimokantys1000000.txt", "Nesimokantys10000000.txt"};
     f.open("temp.txt");
-
-    while (true)
-    {
-        try
-        {
-            if (!f)
-            {
-                throw "Failo atidaryti nepavyko";
-            }
-            break;
-        }
-        catch (const char *masyvas)
-        {
-            cout << masyvas << endl;
-            return 0;
-        }
-    }
-
     while (getline(f, eilute))
     {
         bool pasikartojantis;
@@ -390,7 +372,8 @@ void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasL
         catch (const char *masyvas)
         {
             cout << masyvas << endl;
-            std::terminate();
+            filePasirinkimas();
+            break;
         }
     }
     int iteracijos;
@@ -438,11 +421,12 @@ void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasL
     }
     if (testuojamasFile != "kursiokai.txt")
     {
-        if (a == false)
+        
+        if (a == false )
         {
             cout << "Programos vidutinis vykdymo laikas: " << std::fixed << std::setprecision(3) << visasLaikas / 2 << "s" << endl;
         }
-        if (a == true)
+        if (a == true )
         {
             cout << "Nuskaitymas is failo vidutiniskai truko: " << std::fixed << std::setprecision(3) << visasLaikas / 2 << "s" << endl;
             BendrasLaikas += visasLaikas / 2;
@@ -507,24 +491,6 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal)
     std::ostream *out;
     std::ofstream f;
     f.open("isvedimas.txt");
-
-    while (true)
-    {
-        try
-        {
-            if (!f)
-            {
-                throw "Nepavyko atidaryti failo";
-            }
-            break;
-        }
-        catch (const char *masyvas)
-        {
-            cout << masyvas << endl;
-            abort();
-        }
-    }
-
     if (outputFILE)
     {
         out = &f;
@@ -578,32 +544,14 @@ double GeneruotiFiles(int StudSkaicius)
     std::stringstream BufferisTest;
     std::ofstream f;
     f.open(FileName);
-
-    while (true)
-    {
-        try
-        {
-            if (!f)
-            {
-                throw "Nepavyko atidaryti failo";
-            }
-            break;
-        }
-        catch (const char *masyvas)
-        {
-            cout << masyvas << endl;
-            return 0;
-        }
-    }
-
     int pazSk = dist(mt);
     auto start = std::chrono::high_resolution_clock::now();
     BufferisTest << std::setw(16) << std::left << "Vardas" << std::setw(16) << std::left << "Pavarde" << std::setw(16) << std::left;
-    for (int j = 1; j <= pazSk; j++)
+    for (int j = 0; j <= pazSk; j++)
     {
         if (j != pazSk)
         {
-            BufferisTest << "ND" + std::to_string(j) << std::setw(16) << std::left;
+            BufferisTest << "ND" + std::to_string(j+1) << std::setw(16) << std::left;
         }
         else
             BufferisTest << "EG rez." << endl;
@@ -612,9 +560,9 @@ double GeneruotiFiles(int StudSkaicius)
     for (int i = 1; i <= StudSkaicius; i++)
     {
         BufferisTest << std::setw(16) << std::left << "Vardas" + std::to_string(i) << std::setw(16) << std::left << "Pavarde" + std::to_string(i) << std::setw(16) << std::left;
-        for (int j = 1; j <= pazSk; j++)
+        for (int j = 0; j <= pazSk; j++)
         {
-            BufferisTest << dist(mt) << std::setw(16) << std::left;
+            BufferisTest << dist(mt)  << std::setw(16) << std::left;
         }
         if (i != StudSkaicius)
         {
@@ -663,23 +611,6 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
     std::stringstream buferis;
     std::ofstream f, F;
     f.open(FILEMOK);
-
-    while (true)
-    {
-        try
-        {
-            if (!f)
-            {
-                throw "Nepavyko atidaryti file";
-            }
-            break;
-        }
-        catch (const char *masyvas)
-        {
-            cout << masyvas << endl;
-            abort();
-        }
-    }
 
     if (RusiavimasPagal == 1)
     {
@@ -751,24 +682,6 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
         f.close();
 
         f.open(FILENESIMOK);
-
-        while (true)
-        {
-            try
-            {
-                if (!f)
-                {
-                    throw "Nepavyko atidaryti file";
-                }
-                break;
-            }
-            catch (const char *masyvas)
-            {
-                cout << masyvas << endl;
-                abort();
-            }
-        }
-
         buferis << std::setw(16) << std::left << "Pavarde" << std::setw(16) << std::left << "Vardas" << std::setw(16) << std::left << "Galutinis (Vid.)\n";
         buferis << "----------------------------------------------------" << endl;
         for (Stud j : nesimokantys)
@@ -811,8 +724,31 @@ void tyrimai(int pasirinkimasTyrimo)
     {
         int RusiavimasPagal;
         cout << "Studentus rusiuoti pagal: 1 - vardus, 2 - pavardes, 3 - galutini bala, 4 - duomenu nerusiuoti\n";
-        cin >> RusiavimasPagal;
-
+        while (true)
+        {
+            try
+            {
+                cin >> RusiavimasPagal;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw "Neteisingas pasirinkimas, iveskite skaiciu 1-4";
+                    break;
+                }
+                else if (RusiavimasPagal > 4 || RusiavimasPagal < 1)
+                {
+                    throw "Neteisingas pasirinkimas, iveskite skaiciu 1-4";
+                    break;
+                }
+    
+                break;
+            }
+            catch (const char *masyvas)
+            {
+                cout << masyvas << endl;
+            }
+        }
         for (int a = 1000; a <= 10000000; a *= 10)
         {
             double BendrasVidLaikas = 0.0;
@@ -821,7 +757,7 @@ void tyrimai(int pasirinkimasTyrimo)
             vectorIdejimas(a, pirmunai, nesimokantys, BendrasVidLaikas);
             PrintVektorius(nesimokantys, pirmunai, a, RusiavimasPagal, BendrasVidLaikas);
             cout << "Visos programos vykdymo laikas: ";
-            cout << BendrasVidLaikas << endl;
+            cout << BendrasVidLaikas << "s" << endl;
             cout << endl;
         }
     }

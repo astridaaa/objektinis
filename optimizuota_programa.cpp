@@ -20,10 +20,12 @@ int main()
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 throw "Neteisingas pasirinkimas, iveskite skaiciu 1-7";
+                break;
             }
-            if (meniu > 7 || meniu < 1)
+            else if (meniu > 7 || meniu < 1)
             {
                 throw "Neteisingas pasirinkimas, iveskite skaiciu 1-7";
+                break;
             }
 
             break;
@@ -126,9 +128,9 @@ int main()
         tyrimai(2);
         break;
     }
-    case 7:{
+    case 7:
+    {
         return 0;
     }
-    
     }
 }
