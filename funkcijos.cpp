@@ -273,34 +273,27 @@ void duomenu_generavimas(vector<Stud> &studentai)
 
 string filePasirinkimas()
 {
-    system("dir /b *.txt > temp.txt");
+    system("for /r %A in (*.txt) do @echo %~nxA >> temp.txt");
     ifstream f;
     string eilute;
     int pasirinkimuSUM = 0;
     int pasirinkimas;
     vector<string> txtfiles;
-    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt", "Studentai10000000.txt", "Pirmunai1000.txt", "Pirmunai10000.txt", "Pirmunai100000.txt", "Pirmunai1000000.txt", "Pirmunai10000000.txt", "Nesimokantys1000.txt", "Nesimokantys10000.txt", "Nesimokantys100000.txt", "Nesimokantys1000000.txt", "Nesimokantys10000000.txt"};
+    vector<string> nenorimiFiles = {"isvedimas.txt", "vardai_moteru.txt", "vardai_vyru.txt", "temp.txt", "Pirmunai1000.txt", "Pirmunai10000.txt", "Pirmunai100000.txt", "Pirmunai1000000.txt", "Pirmunai10000000.txt", "Nesimokantys1000.txt", "Nesimokantys10000.txt", "Nesimokantys100000.txt", "Nesimokantys1000000.txt", "Nesimokantys10000000.txt"};
+
     f.open("temp.txt");
+
     while (getline(f, eilute))
     {
-        bool pasikartojantis;
-        for (int a = 1; a <= nenorimiFiles.size(); a++)
+
+        eilute.pop_back();
+        if (std::find(nenorimiFiles.begin(), nenorimiFiles.end(), eilute) == nenorimiFiles.end())
         {
-            if (eilute != nenorimiFiles[a - 1])
-            {
-                pasikartojantis = false;
-            }
-            else
-            {
-                pasikartojantis = true;
-                break;
-            }
-        }
-        if (!pasikartojantis)
-        {
+
             txtfiles.push_back(eilute);
         }
     }
+
     f.close();
     system("del temp.txt");
     int a = 1;
@@ -358,11 +351,17 @@ void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasL
     }
     cout << "...\n";
     cout << testuojamasFile << endl;
-    f.open(testuojamasFile);
+
+    if (testuojamasFile != "kursiokai.txt")
+    {
+        testuojamasFile = "tyrimo_files\\" + testuojamasFile;
+    }
+
     while (true)
     {
         try
         {
+            f.open(testuojamasFile);
             if (!f)
             {
                 throw "Failo atidaryti nepavyko";
@@ -372,8 +371,9 @@ void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasL
         catch (const char *masyvas)
         {
             cout << masyvas << endl;
-            filePasirinkimas();
-            break;
+            testuojamasFile = filePasirinkimas();
+
+            continue;
         }
     }
     int iteracijos;
@@ -421,12 +421,12 @@ void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasL
     }
     if (testuojamasFile != "kursiokai.txt")
     {
-        
-        if (a == false )
+
+        if (a == false)
         {
             cout << "Programos vidutinis vykdymo laikas: " << std::fixed << std::setprecision(3) << visasLaikas / 2 << "s" << endl;
         }
-        if (a == true )
+        if (a == true)
         {
             cout << "Nuskaitymas is failo vidutiniskai truko: " << std::fixed << std::setprecision(3) << visasLaikas / 2 << "s" << endl;
             BendrasLaikas += visasLaikas / 2;
@@ -551,7 +551,7 @@ double GeneruotiFiles(int StudSkaicius)
     {
         if (j != pazSk)
         {
-            BufferisTest << "ND" + std::to_string(j+1) << std::setw(16) << std::left;
+            BufferisTest << "ND" + std::to_string(j + 1) << std::setw(16) << std::left;
         }
         else
             BufferisTest << "EG rez." << endl;
@@ -562,7 +562,7 @@ double GeneruotiFiles(int StudSkaicius)
         BufferisTest << std::setw(16) << std::left << "Vardas" + std::to_string(i) << std::setw(16) << std::left << "Pavarde" + std::to_string(i) << std::setw(16) << std::left;
         for (int j = 0; j <= pazSk; j++)
         {
-            BufferisTest << dist(mt)  << std::setw(16) << std::left;
+            BufferisTest << dist(mt) << std::setw(16) << std::left;
         }
         if (i != StudSkaicius)
         {
@@ -600,6 +600,8 @@ void vectorIdejimas(int studSkaicius, vector<Stud> &pirmunai, vector<Stud> &nesi
         std::chrono::duration<double> diff1 = end1 - start1;
         visasLaikas1 += diff1.count();
     }
+    pirmunai.shrink_to_fit();
+    nesimokantys.shrink_to_fit();
     cout << "Duomenu isskirstymas i dvi grupes vidutiniskai trunka: " << visasLaikas1 / 2 << "s\n";
     BendrasLaikas += visasLaikas1 / 2;
 }
@@ -680,6 +682,7 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
         buferis.str("");
         buferis.clear();
         f.close();
+        pirmunai.clear();
 
         f.open(FILENESIMOK);
         buferis << std::setw(16) << std::left << "Pavarde" << std::setw(16) << std::left << "Vardas" << std::setw(16) << std::left << "Galutinis (Vid.)\n";
@@ -691,12 +694,13 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
 
         f << buferis.rdbuf();
         f.close();
+
         auto end2 = std::chrono::high_resolution_clock::now();
 
         std::chrono::duration<double> diff2 = end2 - start2;
         IsvedimoLaikas += diff2.count();
     }
-
+    nesimokantys.clear();
     cout << "Failus vidutiniskai uztruko isvesti: " << IsvedimoLaikas / 2 << "s" << endl;
     BendrasLaikas += IsvedimoLaikas / 2;
 }
@@ -741,7 +745,7 @@ void tyrimai(int pasirinkimasTyrimo)
                     throw "Neteisingas pasirinkimas, iveskite skaiciu 1-4";
                     break;
                 }
-    
+
                 break;
             }
             catch (const char *masyvas)

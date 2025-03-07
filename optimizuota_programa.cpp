@@ -1,5 +1,8 @@
 #include "Funkciju_aprasai.h"
 
+
+//prie sytem reikes pachanguint directory ir failus skaityti tik is archyvo
+
 int main()
 {
 
