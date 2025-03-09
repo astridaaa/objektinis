@@ -1,4 +1,4 @@
-#include "Funkciju_aprasai.h"
+#include "functions.h"
 
 bool tinkamas_char(string vardas)
 {

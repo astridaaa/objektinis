@@ -1,4 +1,4 @@
-#include "optimizuota_programa.h"
+#include "main.h"
 
 bool tinkamas_char(string vardas);
 
