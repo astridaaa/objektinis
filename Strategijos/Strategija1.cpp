@@ -47,7 +47,7 @@ int main(){
             studentuIsskirstymas(studentai, visasLaikas, pirmunai, nesimokantys);
             studentuRusiavimas(rusiavimasPagal, pirmunai, nesimokantys, visasLaikas);
             testavimasPrint(studentai, pirmunai, nesimokantys, a);
-            cout << "Bendras programos vykdymo laikas" << visasLaikas << "s" << endl;
+            cout << "Bendras programos vykdymo laikas: " << visasLaikas << "s" << endl;
         }
         
         break;
