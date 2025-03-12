@@ -7,7 +7,7 @@
 #include "../functions.h"
 
 int main(){
-    double visasLaikas = 0.0;
+    //double visasLaikas = 0.0;
     int konteineriuTipas;
     int rusiavimasPagal;
     cout << "Programa testuojama su:" << endl;
@@ -47,6 +47,7 @@ int main(){
     }
 
     for(int a = 1000; a <= 10000000; a *= 10){
+        double visasLaikas = 0.0;
         string testavimoFile = "Tyrimo_files\\Studentai" + std::to_string(a) + ".txt";
         cout << "...\n" << std::to_string(a) + ".txt" << endl;
         std::vector<Stud> studentai;
