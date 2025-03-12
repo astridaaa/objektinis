@@ -47,6 +47,7 @@ int main(){
             std::vector<Stud> nesimokantys;*/
             nuskaitymasFile(rusiavimasPagal,testavimoFile, visasLaikas, studentai);
             studentuIsskirstymas(studentai, visasLaikas, pirmunai, nesimokantys);
+            studentuRusiavimas(rusiavimasPagal, pirmunai, nesimokantys, visasLaikas);
         }
         
         break;

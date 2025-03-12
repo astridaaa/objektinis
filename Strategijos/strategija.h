@@ -97,12 +97,14 @@ cout << "Studentu isskirstymas i dvi grupes vidutiniskai uztruko: " << laikasPro
 
 template <typename konteineris>
 void studentuRusiavimas(int rusiavimasPagal, konteineris& pirmunai, konteineris& nesimokantys, double &visasLaikas){
-
+    double programosLaikas = 0.0;
     if constexpr (is_same_v<konteineris, list<typename konteineris::value_type>>)
     {
         for(int i = 0; i < 3; i++){
+            auto start = std::chrono::high_resolution_clock::now();
+
             if (rusiavimasPagal == 1)
-        {66+
+        {
             sort(nesimokantys.begin(), nesimokantys.end(), PalygintiVardas);
             sort(pirmunai.begin(), pirmunai.end(), PalygintiVardas);
         }
@@ -116,11 +118,20 @@ void studentuRusiavimas(int rusiavimasPagal, konteineris& pirmunai, konteineris&
             sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
             sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
         }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> difference = end - start;
+        if(i != 0){
+            programosLaikas += difference.count();
         }
-        
+        }
+        cout << "Vidutinis programos vykdymo laikas: " << programosLaikas/2 << endl;
+        visasLaikas += programosLaikas/2;
     }
     else{
-        if (rusiavimasPagal == 1)
+        for(int i = 0; i < 3; i++){
+            auto start = std::chrono::high_resolution_clock::now();
+
+            if (rusiavimasPagal == 1)
         {
             nesimokantys.sort(PalygintiVardas);
             pirmunai.sort(PalygintiVardas);
@@ -135,11 +146,15 @@ void studentuRusiavimas(int rusiavimasPagal, konteineris& pirmunai, konteineris&
             nesimokantys.sort(PalygintiKategorijas);
             pirmunai.sort(PalygintiKategorijas);
         }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> difference = end - start;
+        if(i != 0){
+            programosLaikas += difference.count();
+        }
+        }
+        cout << "Vidutinis programos vykdymo laikas: " << programosLaikas/2 << endl;
+        visasLaikas += programosLaikas/2;
     }
 }
 
-/*    cout << "1 | Vardus\n";
-    cout << "2 | Pavardes\n";
-    cout << "3 | Galutini bala\n";
-    cout << "4 | Duomenu nerusiuoti\n";*/
 
