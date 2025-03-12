@@ -22,20 +22,32 @@ int main(){
     cout << "4 | Duomenu nerusiuoti\n";
     cin >> rusiavimasPagal;
 
-    if(konteineriuTipas == 1){
-            std::vector<Stud> studentai;
-            std::vector<Stud> pirmunai;
-            std::vector<Stud> nesimokantys;
+    if (konteineriuTipas == 1)
+    {
+        std::vector<Stud> studentai;
+        std::vector<Stud> pirmunai;
+        std::vector<Stud> nesimokantys;
+        cout << " |VECTOR| " << endl;
+        cout << "----------" << endl;
     }
-    else if(konteineriuTipas == 2){
+    else if (konteineriuTipas == 2)
+    {
         std::deque<Stud> studentai;
         std::deque<Stud> pirmunai;
         std::deque<Stud> nesimokantys;
+        cout << " |DEQUE| " << endl;
+        cout << "---------" << endl;
     }
-    else if(konteineriuTipas == 3){
-        //listai
+    else if (konteineriuTipas == 3)
+    {
+        std::list<Stud> studentai;
+        std::list<Stud> pirmunai;
+        std::list<Stud> nesimokantys;
+        cout << " |LIST| " << endl;
+        cout << "--------" << endl;
     }
-    else{
+    else
+    {
         cout << "Pasirinkite teisinga konteinerio tipa!" << endl;
     }
 
