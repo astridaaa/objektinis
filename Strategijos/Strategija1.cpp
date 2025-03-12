@@ -9,10 +9,6 @@ int main(){
     double visasLaikas = 0.0;
     int konteineriuTipas;
     int rusiavimasPagal;
-    std::vector<Stud> studentai;
-    std::vector<Stud> pirmunai;
-    std::vector<Stud> nesimokantys;
-
     cout << "Programa testuojama su:" << endl;
     cout << "1 | vector tipo konteineriu" << endl;
     cout << "2 | deque tipo konteineriu" << endl;
@@ -25,59 +21,35 @@ int main(){
     cout << "3 | Galutini bala\n";
     cout << "4 | Duomenu nerusiuoti\n";
     cin >> rusiavimasPagal;
-    
-    //string testavimoFile = "Tyrimo_files\\" + filePasirinkimas(); //ima is tyrimu aplankalo
 
-
-
-    switch (konteineriuTipas)
-    {
-    case 1:
-    {
-
-        for(int a = 1000; a <= 10000000; a *= 10){
-            string testavimoFile = "Tyrimo_files\\Studentai" + std::to_string(a) + ".txt";
-            cout << "...\n" << std::to_string(a) + ".txt" << endl;
-        
-            
-            /*std::vector<Stud> studentai;
+    if(konteineriuTipas == 1){
+            std::vector<Stud> studentai;
             std::vector<Stud> pirmunai;
-            std::vector<Stud> nesimokantys;*/
-            nuskaitymasFile(rusiavimasPagal,testavimoFile, visasLaikas, studentai);
-            studentuIsskirstymas(studentai, visasLaikas, pirmunai, nesimokantys);
-            studentuRusiavimas(rusiavimasPagal, pirmunai, nesimokantys, visasLaikas);
-            testavimasPrint(studentai, pirmunai, nesimokantys, a);
-            cout << "Bendras programos vykdymo laikas: " << visasLaikas << "s" << endl;
-        }
-        
-        break;
+            std::vector<Stud> nesimokantys;
     }
-      
-    case 2:
-    {
-      break;  
+    else if(konteineriuTipas == 2){
+        std::deque<Stud> studentai;
+        std::deque<Stud> pirmunai;
+        std::deque<Stud> nesimokantys;
+    }
+    else if(konteineriuTipas == 3){
+        //listai
+    }
+    else{
+        cout << "Pasirinkite teisinga konteinerio tipa!" << endl;
     }
 
-    case 3: {
-
+    for(int a = 1000; a <= 10000000; a *= 10){
+        string testavimoFile = "Tyrimo_files\\Studentai" + std::to_string(a) + ".txt";
+        cout << "...\n" << std::to_string(a) + ".txt" << endl;
+        std::vector<Stud> studentai;
+        std::vector<Stud> pirmunai;
+        std::vector<Stud> nesimokantys;
+        nuskaitymasFile(rusiavimasPagal,testavimoFile, visasLaikas, studentai);
+        studentuIsskirstymas(studentai, visasLaikas, pirmunai, nesimokantys);
+        studentuRusiavimas(rusiavimasPagal, pirmunai, nesimokantys, visasLaikas);
+        testavimasPrint(studentai, pirmunai, nesimokantys, a);
+        cout << "Bendras programos vykdymo laikas: " << visasLaikas << "s" << endl;
     }
-
-    default:
-        cout << "Pasirinkite testavimo konteineri!\n";
-    }
-    
-
-
-
-    //nuskaitymas
-
-
-   
-    //sudedu i konteienri pagal template
-    //padarau sorta
-    //sudedu i kitus du konteinerius: pirmunus ir nesimokancius
-
-
-    
     
 }
