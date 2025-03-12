@@ -151,8 +151,8 @@ void studentuRusiavimas(int rusiavimasPagal, konteineris &pirmunai, konteineris 
         visasLaikas += programosLaikas / 2;
     }
 }
-template <typename konteineris>
-void testavimasPrint(konteineris &studentai, konteineris& pirmunai, konteineris& nesimokantys, int a)
+//template <typename konteineris>
+/*void testavimasPrint(konteineris &studentai, konteineris& pirmunai, konteineris& nesimokantys, int a)
 {   
     string FILEMOK = "Pirmunai" + std::to_string(a) + ".txt";
     string FILENESIMOK = "Nesimokantys" + std::to_string(a) + ".txt";
@@ -183,4 +183,4 @@ void testavimasPrint(konteineris &studentai, konteineris& pirmunai, konteineris&
 
     F << buferis.rdbuf();
     F.close();
-}
+}*/

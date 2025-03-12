@@ -1,10 +1,11 @@
-
-#include "strategija.h"
-#include "../functions.h"
 //Bendro studentai konteinerio (vector, list ir deque tipų) skaidymas (rūšiavimas) į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų". 
 //Tokiu būdu tas pats studentas yra dvejuose konteineriuose: bendrame studentai ir viename iš suskaidytų (vargšiukai arba kietiakai). Nesunku pastebėti, 
 //kad tokia strategija yra neefektyvi užimamos atminties atžvilgiu (įsitikinkite tuo!), tačiau šiame žingsnyje svarbiausia yra patyrinėti, kaip 
 //programos veikimo sparta priklauso nuo konteinerio tipo?
+
+#include "strategija.h"
+#include "../functions.h"
+
 int main(){
     double visasLaikas = 0.0;
     int konteineriuTipas;
@@ -27,24 +28,18 @@ int main(){
         std::vector<Stud> studentai;
         std::vector<Stud> pirmunai;
         std::vector<Stud> nesimokantys;
-        cout << " |VECTOR| " << endl;
-        cout << "----------" << endl;
     }
     else if (konteineriuTipas == 2)
     {
         std::deque<Stud> studentai;
         std::deque<Stud> pirmunai;
         std::deque<Stud> nesimokantys;
-        cout << " |DEQUE| " << endl;
-        cout << "---------" << endl;
     }
     else if (konteineriuTipas == 3)
     {
         std::list<Stud> studentai;
         std::list<Stud> pirmunai;
         std::list<Stud> nesimokantys;
-        cout << " |LIST| " << endl;
-        cout << "--------" << endl;
     }
     else
     {
@@ -60,7 +55,7 @@ int main(){
         nuskaitymasFile(rusiavimasPagal,testavimoFile, visasLaikas, studentai);
         studentuIsskirstymas(studentai, visasLaikas, pirmunai, nesimokantys);
         studentuRusiavimas(rusiavimasPagal, pirmunai, nesimokantys, visasLaikas);
-        testavimasPrint(studentai, pirmunai, nesimokantys, a);
+        //testavimasPrint(studentai, pirmunai, nesimokantys, a);
         cout << "Bendras programos vykdymo laikas: " << visasLaikas << "s" << endl;
     }
     
