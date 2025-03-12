@@ -42,6 +42,9 @@ int main(){
 
         for(int a = 1000; a <= 10000000; a *= 10){
             string testavimoFile = "Tyrimo_files\\Studentai" + std::to_string(a) + ".txt";
+            cout << "...\n" << testavimoFile << endl;
+        
+            
             /*std::vector<Stud> studentai;
             std::vector<Stud> pirmunai;
             std::vector<Stud> nesimokantys;*/

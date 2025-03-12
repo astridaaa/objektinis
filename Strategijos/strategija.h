@@ -98,25 +98,31 @@ cout << "Studentu isskirstymas i dvi grupes vidutiniskai uztruko: " << laikasPro
 template <typename konteineris>
 void studentuRusiavimas(int rusiavimasPagal, konteineris& pirmunai, konteineris& nesimokantys, double &visasLaikas){
     double programosLaikas = 0.0;
-    if constexpr (is_same_v<konteineris, list<typename konteineris::value_type>>)
+    if constexpr (is_same_v<konteineris, list<typename konteineris::value_type>>) //check ar list
     {
         for(int i = 0; i < 3; i++){
             auto start = std::chrono::high_resolution_clock::now();
 
             if (rusiavimasPagal == 1)
         {
-            sort(nesimokantys.begin(), nesimokantys.end(), PalygintiVardas);
-            sort(pirmunai.begin(), pirmunai.end(), PalygintiVardas);
+            //sort(nesimokantys.begin(), nesimokantys.end(), PalygintiVardas);
+            //sort(pirmunai.begin(), pirmunai.end(), PalygintiVardas);
+            nesimokantys.sort(PalygintiVardas);
+            pirmunai.sort(PalygintiVardas);
         }
         if (rusiavimasPagal == 2)
         {
-            sort(nesimokantys.begin(), nesimokantys.end(), PalygintiPavardes);
-            sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
+           //sort(nesimokantys.begin(), nesimokantys.end(), PalygintiPavardes);
+            //sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
+            nesimokantys.sort(PalygintiPavardes);
+            pirmunai.sort(PalygintiPavardes);
         }
         if (rusiavimasPagal == 3)
         {
-            sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
-            sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
+            //sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
+            //sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
+            nesimokantys.sort(PalygintiKategorijas);
+            pirmunai.sort(PalygintiKategorijas);
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> difference = end - start;
@@ -124,7 +130,8 @@ void studentuRusiavimas(int rusiavimasPagal, konteineris& pirmunai, konteineris&
             programosLaikas += difference.count();
         }
         }
-        cout << "Vidutinis programos vykdymo laikas: " << programosLaikas/2 << endl;
+        else cout << "Vidutiniskai elementus rusiuoja: 0.000s" << endl;
+        cout << "Vidutiniskai elementus rusiuoja: " << programosLaikas/2 << endl;
         visasLaikas += programosLaikas/2;
     }
     else{
@@ -133,19 +140,26 @@ void studentuRusiavimas(int rusiavimasPagal, konteineris& pirmunai, konteineris&
 
             if (rusiavimasPagal == 1)
         {
-            nesimokantys.sort(PalygintiVardas);
-            pirmunai.sort(PalygintiVardas);
+            sort(nesimokantys.begin(), nesimokantys.end(), PalygintiVardas);
+            sort(pirmunai.begin(), pirmunai.end(), PalygintiVardas);
+            //nesimokantys.sort(PalygintiVardas);
+            //pirmunai.sort(PalygintiVardas);
         }
         if (rusiavimasPagal == 2)
         {
-            nesimokantys.sort(PalygintiPavardes);
-            pirmunai.sort(PalygintiPavardes);
+            sort(nesimokantys.begin(), nesimokantys.end(), PalygintiPavardes);
+            sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
+            //nesimokantys.sort(PalygintiPavardes);
+            //pirmunai.sort(PalygintiPavardes);
         }
         if (rusiavimasPagal == 3)
         {
-            nesimokantys.sort(PalygintiKategorijas);
-            pirmunai.sort(PalygintiKategorijas);
+            sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
+            sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
+            //nesimokantys.sort(PalygintiKategorijas);
+            //pirmunai.sort(PalygintiKategorijas);
         }
+        else cout << "Vidutiniskai elementus rusiuoja: 0.000s" << endl;
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> difference = end - start;
         if(i != 0){
