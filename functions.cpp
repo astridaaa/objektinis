@@ -1,4 +1,4 @@
-#include "../functions.h"
+#include "functions.h"
 
 bool tinkamas_char(string vardas)
 {
@@ -330,7 +330,8 @@ string filePasirinkimas()
     return txtfiles[pasirinkimas - 1];
 }
 
-void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasLaikas)
+template <typename konteineris>
+void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLaikas)
 {
     double visasLaikas = 0.0;
     vector<string> visaeil;
@@ -354,7 +355,7 @@ void fileskait(vector<Stud> &studentai, bool a, string filePav, double &BendrasL
 
     if (testuojamasFile != "kursiokai.txt")
     {
-        testuojamasFile = "tyrimo_files\\" + testuojamasFile;
+        testuojamasFile = "Strategijos\\Tyrimo_files\\" + testuojamasFile;
     }
 
     while (true)
@@ -576,10 +577,11 @@ double GeneruotiFiles(int StudSkaicius)
     return diff.count();
 }
 
-void vectorIdejimas(int studSkaicius, vector<Stud> &pirmunai, vector<Stud> &nesimokantys, double &BendrasLaikas)
+template <typename konteineris>
+void vectorIdejimas(int studSkaicius, konteineris &pirmunai, konteineris &nesimokantys, double &BendrasLaikas, konteineris &studentaiTest)
 {
     string file = "Studentai" + std::to_string(studSkaicius) + ".txt";
-    vector<Stud> studentaiTest;
+    studentaiTest;
     fileskait(studentaiTest, true, file, BendrasLaikas);
 
     double visasLaikas1 = 0.0;
@@ -600,13 +602,17 @@ void vectorIdejimas(int studSkaicius, vector<Stud> &pirmunai, vector<Stud> &nesi
         std::chrono::duration<double> diff1 = end1 - start1;
         visasLaikas1 += diff1.count();
     }
-    pirmunai.shrink_to_fit();
-    nesimokantys.shrink_to_fit();
+    if constexpr (std::is_same_v<konteineris, vector<Stud>> || std::is_same_v<konteineris, deque<Stud>>){
+        pirmunai.shrink_to_fit();
+        nesimokantys.shrink_to_fit();
+    }
+
     cout << "Duomenu isskirstymas i dvi grupes vidutiniskai trunka: " << visasLaikas1 / 2 << "s\n";
     BendrasLaikas += visasLaikas1 / 2;
 }
 
-void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int RusiavimasPagal, double &BendrasLaikas)
+template <typename konteineris>
+void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int RusiavimasPagal, double &BendrasLaikas)
 {
     string FILEMOK = "Pirmunai" + std::to_string(a) + ".txt";
     string FILENESIMOK = "Nesimokantys" + std::to_string(a) + ".txt";
@@ -620,8 +626,17 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
         for (int t = 0; t < 2; t++)
         {
             auto t1 = std::chrono::high_resolution_clock::now();
-            sort(nesimokantys.begin(), nesimokantys.end(), PalygintiVardas);
-            sort(pirmunai.begin(), pirmunai.end(), PalygintiVardas);
+            if constexpr (std::is_same_v<konteineris, vector<Stud>> || std::is_same_v<konteineris, deque<Stud>>)
+            {
+                sort(nesimokantys.begin(), nesimokantys.end(), PalygintiVardas);
+                sort(pirmunai.begin(), pirmunai.end(), PalygintiVardas);
+            }
+            else
+            {
+                nesimokantys.sort(PalygintiVardas);
+                pirmunai.sort(PalygintiVardas);
+            }
+
             auto t2 = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> difft = t2 - t1;
             LaikasRusiavimo += difft.count();
@@ -636,8 +651,19 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
         for (int t = 0; t < 2; t++)
         {
             auto t1 = std::chrono::high_resolution_clock::now();
-            sort(nesimokantys.begin(), nesimokantys.end(), PalygintiPavardes);
-            sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
+            if constexpr (std::is_same_v<konteineris, vector<Stud>> || std::is_same_v<konteineris, deque<Stud>>)
+            {
+                sort(nesimokantys.begin(), nesimokantys.end(), PalygintiPavardes);
+                sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
+            }
+            else
+            {
+                nesimokantys.sort(PalygintiPavardes);
+                pirmunai.sort(PalygintiPavardes);
+            }
+
+            // sort(nesimokantys.begin(), nesimokantys.end(), PalygintiPavardes);
+            // sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
             auto t2 = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> difft = t2 - t1;
             LaikasRusiavimo += difft.count();
@@ -651,8 +677,19 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
         for (int t = 0; t < 2; t++)
         {
             auto t1 = std::chrono::high_resolution_clock::now();
-            sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
-            sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
+            if constexpr (std::is_same_v<konteineris, vector<Stud>> || std::is_same_v<konteineris, deque<Stud>>)
+            {
+                sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
+                sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
+            }
+            else
+            {
+                nesimokantys.sort(PalygintiKategorijas);
+                pirmunai.sort(PalygintiKategorijas);
+            }
+
+            // sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
+            // sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
             auto t2 = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> difft = t2 - t1;
             LaikasRusiavimo += difft.count();
@@ -698,14 +735,15 @@ void PrintVektorius(vector<Stud> nesimokantys, vector<Stud> pirmunai, int a, int
         auto end2 = std::chrono::high_resolution_clock::now();
 
         std::chrono::duration<double> diff2 = end2 - start2;
-        IsvedimoLaikas += diff2.count();
+        // IsvedimoLaikas += diff2.count();
     }
     nesimokantys.clear();
-    cout << "Failus vidutiniskai uztruko isvesti: " << IsvedimoLaikas / 2 << "s" << endl;
-    BendrasLaikas += IsvedimoLaikas / 2;
+    // cout << "Failus vidutiniskai uztruko isvesti: " << IsvedimoLaikas / 2 << "s" << endl;
+    // BendrasLaikas += IsvedimoLaikas / 2;
 }
 
-void tyrimai(int pasirinkimasTyrimo)
+template <typename konteineris>
+void tyrimai(int pasirinkimasTyrimo, konteineris& pirmunai, konteineris& nesimokantys, konteineris& studentaiTest)
 {
     if (pasirinkimasTyrimo == 1)
     {
@@ -756,9 +794,9 @@ void tyrimai(int pasirinkimasTyrimo)
         for (int a = 1000; a <= 10000000; a *= 10)
         {
             double BendrasVidLaikas = 0.0;
-            vector<Stud> pirmunai;
-            vector<Stud> nesimokantys;
-            vectorIdejimas(a, pirmunai, nesimokantys, BendrasVidLaikas);
+            //vector<Stud> pirmunai;
+            //vector<Stud> nesimokantys;
+            vectorIdejimas(a, pirmunai, nesimokantys, BendrasVidLaikas, studentaiTest);
             PrintVektorius(nesimokantys, pirmunai, a, RusiavimasPagal, BendrasVidLaikas);
             cout << "Visos programos vykdymo laikas: ";
             cout << BendrasVidLaikas << "s" << endl;
