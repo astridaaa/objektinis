@@ -12,8 +12,20 @@ void paz_gener(Stud &studentas);
 
 Stud vardai(Stud &studentas);
 
+bool PalygintiVardas(Stud &stud1, Stud &stud2);
+
+bool PalygintiPavardes(Stud &stud1, Stud &stud2);
+
+bool PalygintiBalaMed(Stud &stud1, Stud &stud2);
+
+bool PalygintiBalaVid(Stud &stud1, Stud &stud2);
+
+bool PalygintiKategorijas(Stud &stud1, Stud &stud2);
+
 void duomenu_ivedimas(vector<Stud> &studentai, int meniu);
+
 string filePasirinkimas();
+
 void duomenu_generavimas(vector<Stud> &studentai);
 
 // template <typename konteineris>
@@ -67,7 +79,7 @@ void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLa
         }
     }
     int iteracijos;
-    (testuojamasFile == "kursiokai.txt") ? iteracijos = 0 : iteracijos = 1;
+    (testuojamasFile == "kursiokai.txt") ? iteracijos = 0 : iteracijos = 2;
     for (int i = 0; i <= iteracijos; i++)
     {
         studentai.clear();
@@ -103,11 +115,15 @@ void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLa
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> diff = end - start;
-        visasLaikas += diff.count();
+        if(i != 0){
+            visasLaikas += diff.count();
+        }
         if (testuojamasFile != "kursiokai.txt" && a == false)
         {
             cout << i + 1 << " iteracija: " << std::fixed << std::setprecision(3) << diff.count() << "s" << endl;
         }
+        
+       
     }
     if (testuojamasFile != "kursiokai.txt")
     {
@@ -119,20 +135,10 @@ void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLa
         if (a == true)
         {
             cout << "Nuskaitymas is failo vidutiniskai truko: " << std::fixed << std::setprecision(3) << visasLaikas / 2 << "s" << endl;
-            BendrasLaikas += visasLaikas / 2;
+            BendrasLaikas += (visasLaikas / 2);
         }
     }
 }
-
-bool PalygintiVardas(Stud &stud1, Stud &stud2);
-
-bool PalygintiPavardes(Stud &stud1, Stud &stud2);
-
-bool PalygintiBalaMed(Stud &stud1, Stud &stud2);
-
-bool PalygintiBalaVid(Stud &stud1, Stud &stud2);
-
-bool PalygintiKategorijas(Stud &stud1, Stud &stud2);
 
 void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal);
 
@@ -153,7 +159,7 @@ void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int
     if (RusiavimasPagal == 1)
     {
         double LaikasRusiavimo = 0.0;
-        for (int t = 0; t < 2; t++)
+        for (int t = 0; t < 3; t++)
         {
             auto t1 = std::chrono::high_resolution_clock::now();
             if constexpr (std::is_same_v<konteineris, vector<Stud>> || std::is_same_v<konteineris, deque<Stud>>)
@@ -169,16 +175,20 @@ void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int
 
             auto t2 = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> difft = t2 - t1;
-            LaikasRusiavimo += difft.count();
+            if(t != 0){
+                LaikasRusiavimo += difft.count();
+            }
+            
+            //cout << t+1 << "iteracija: " << difft.count() << "s"<< endl;
         }
 
         cout << "Rusiavimas vidutiniskai uztruko: " << LaikasRusiavimo / 2 << "s" << endl;
-        BendrasLaikas += LaikasRusiavimo / 2;
+        BendrasLaikas += (LaikasRusiavimo / 2);
     }
     else if (RusiavimasPagal == 2)
     {
         double LaikasRusiavimo = 0.0;
-        for (int t = 0; t < 2; t++)
+        for (int t = 0; t < 3; t++)
         {
             auto t1 = std::chrono::high_resolution_clock::now();
             if constexpr (std::is_same_v<konteineris, vector<Stud>> || std::is_same_v<konteineris, deque<Stud>>)
@@ -196,15 +206,18 @@ void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int
             // sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
             auto t2 = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> difft = t2 - t1;
-            LaikasRusiavimo += difft.count();
+            //LaikasRusiavimo += difft.count();
+            if(t != 0){
+                LaikasRusiavimo += difft.count();
+            }
         }
         cout << "Rusiavimas vidutiniskai uztruko: " << LaikasRusiavimo / 2 << "s" << endl;
-        BendrasLaikas += LaikasRusiavimo / 2;
+        BendrasLaikas += (LaikasRusiavimo / 2);
     }
     else if (RusiavimasPagal == 3)
     {
         double LaikasRusiavimo = 0.0;
-        for (int t = 0; t < 2; t++)
+        for (int t = 0; t < 3; t++)
         {
             auto t1 = std::chrono::high_resolution_clock::now();
             if constexpr (std::is_same_v<konteineris, vector<Stud>> || std::is_same_v<konteineris, deque<Stud>>)
@@ -222,11 +235,14 @@ void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int
             // sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
             auto t2 = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> difft = t2 - t1;
-            LaikasRusiavimo += difft.count();
+            //LaikasRusiavimo += difft.count();
+            if(t != 0){
+                LaikasRusiavimo += difft.count();
+            }
         }
 
         cout << "Rusiavimas vidutiniskai uztruko: " << LaikasRusiavimo / 2 << "s" << endl;
-        BendrasLaikas += LaikasRusiavimo / 2;
+        BendrasLaikas += (LaikasRusiavimo / 2);
     }
     else if (RusiavimasPagal == 4)
     {
@@ -272,8 +288,8 @@ void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int
     // BendrasLaikas += IsvedimoLaikas / 2;
 }
 
-template <typename konteineris>
-void vectorIdejimas(int studSkaicius, konteineris &pirmunai, konteineris &nesimokantys, double &BendrasLaikas, konteineris &studentaiTest);
+//template <typename konteineris>
+//void vectorIdejimas(int studSkaicius, konteineris &pirmunai, konteineris &nesimokantys, double &BendrasLaikas, konteineris &studentaiTest);
 
 template <typename konteineris>
 void vectorIdejimas(int studSkaicius, konteineris &pirmunai, konteineris &nesimokantys, double &BendrasLaikas, konteineris &studentaiTest)
