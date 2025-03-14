@@ -48,4 +48,6 @@ struct Stud
 using konteinerisVector = std::vector<Stud>;
 using konteinerisList = std::list<Stud>;
 using konteinerisDeque = std::deque<Stud>;
+
+
 #endif

@@ -1,5 +1,4 @@
 #include "functions.h"
-// reikes arba su templates arba padaryt tris naujus files ir tsg i folderius sudeti strategijas!!!!!
 int main()
 {
 
@@ -141,7 +140,6 @@ int main()
         }
         if (konteinerioTipas == 2)
         {
-
             konteinerisDeque pirmunai;
             konteinerisDeque nesimokantys;
             konteinerisDeque studentaiTest;
@@ -149,7 +147,6 @@ int main()
         }
         if (konteinerioTipas == 3)
         {
-
             konteinerisList pirmunai;
             konteinerisList nesimokantys;
             konteinerisList studentaiTest;

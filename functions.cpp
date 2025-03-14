@@ -289,7 +289,6 @@ string filePasirinkimas()
         eilute.pop_back();
         if (std::find(nenorimiFiles.begin(), nenorimiFiles.end(), eilute) == nenorimiFiles.end())
         {
-
             txtfiles.push_back(eilute);
         }
     }
@@ -330,7 +329,7 @@ string filePasirinkimas()
     return txtfiles[pasirinkimas - 1];
 }
 
-template <typename konteineris>
+/*template <typename konteineris>
 void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLaikas)
 {
     double visasLaikas = 0.0;
@@ -438,7 +437,7 @@ void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLa
         }
     }
 }
-
+*/
 bool PalygintiVardas(Stud &stud1, Stud &stud2)
 {
     return stud1.vardas < stud2.vardas;
@@ -581,7 +580,7 @@ double GeneruotiFiles(int StudSkaicius)
     return diff.count();
 }
 
-template <typename konteineris>
+/*template <typename konteineris>
 void vectorIdejimas(int studSkaicius, konteineris &pirmunai, konteineris &nesimokantys, double &BendrasLaikas, konteineris &studentaiTest)
 {
     string file = "Studentai" + std::to_string(studSkaicius) + ".txt";
@@ -818,4 +817,4 @@ void tyrimai(int pasirinkimasTyrimo, konteineris& pirmunai, konteineris& nesimok
             cout << endl;
         }
     }
-}
+}*/

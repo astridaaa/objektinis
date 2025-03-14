@@ -1,4 +1,4 @@
-# objektinis-
+# objektinis
 
 |             | Failo iš įrašų nuskaitymo vidutinis laikas (s)| Įrašų rūšiavimo vidutinis laikas (s)| Įrašų dalijimo į dvi grupes vidutinis laikas (s)| Išvedimo į failą vidutinis laikas "protingų" ir "nesimokančių" (s)| Visas programos vykdymo laikas (s) |
 |-------------|----------------------------------|------------------------|------------------------------------|------------------------------------------------------|-----------------------------|
