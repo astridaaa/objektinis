@@ -131,3 +131,15 @@ Programa skirta failų, turinčių skirtingą studentų skaičių, testavimui su
         </tr>
     </tbody>
 </table>
+
+
+
+
+
+
+
+
+
+
+
+![image](https://github.com/user-attachments/assets/91d1abe2-b88f-4a38-9e7f-404530484eab)
