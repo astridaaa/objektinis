@@ -5,8 +5,8 @@ int main()
     int meniu;
     int paz;
     string testavimui;
+    vector<Stud> visi;
     srand(time(NULL));
-    // vector<Stud> visi;
     int rusiavimas;
     cout << "Pasirinkite: 1 - duomenys ivedinejami ranka, 2 - pazymiai generuojami, 3 - generuojami visi studentu duomenys, 4 - duomenys nuskaitomi is failo, 5 - atlikti 1 tyrima/ generuoti files, 6 - atlikti 2 tyrima, 7 - baigti programa" << endl;
     while (true)
@@ -39,22 +39,22 @@ int main()
     {
     case 1:
     {
-        /*duomenu_ivedimas(visi, meniu);
-        print(visi, false, 4);*/
+        duomenu_ivedimas(visi, meniu);
+        print(visi, false, 4);
         break;
     }
 
     case 2:
     {
-        /*duomenu_ivedimas(visi, meniu);
-        print(visi, false, 4);*/
+        duomenu_ivedimas(visi, meniu);
+        print(visi, false, 4);
         break;
     }
 
     case 3:
     {
-        /*duomenu_generavimas(visi);
-        print(visi, false, 4);*/
+        duomenu_generavimas(visi);
+        print(visi, false, 4);
         break;
     }
 
@@ -119,8 +119,10 @@ int main()
     }
     case 5:
     {
-
-        // tyrimai(1);
+        konteinerisVector pirmunai;
+        konteinerisVector nesimokantys;
+        konteinerisVector studentaiTest;
+        tyrimai(1, pirmunai, nesimokantys, studentaiTest);
         break;
     }
     case 6:

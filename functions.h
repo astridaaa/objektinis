@@ -20,9 +20,6 @@ void duomenu_generavimas(vector<Stud> &studentai);
 
 string filePasirinkimas();
 
-// template <typename konteineris>
-// void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLaikas);
-
 template <typename konteineris>
 void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLaikas)
 {
@@ -145,10 +142,6 @@ void print(vector<Stud> visi, bool outputFILE, int RusiavimasPagal);
 
 double GeneruotiFiles(int StudSkaicius);
 
-
-// template <typename konteineris>
-// void PrintVektorius(konteineris& nesimokantys,konteineris& pirmunai, int a, int RusiavimasPagal, double &BendrasLaikas);
-
 template <typename konteineris>
 void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int RusiavimasPagal, double &BendrasLaikas)
 {
@@ -181,8 +174,6 @@ void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int
             {
                 LaikasRusiavimo += difft.count();
             }
-
-            // cout << t+1 << "iteracija: " << difft.count() << "s"<< endl;
         }
 
         cout << "Rusiavimas vidutiniskai uztruko: " << LaikasRusiavimo / 2 << "s" << endl;
@@ -204,12 +195,8 @@ void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int
                 nesimokantys.sort(PalygintiPavardes);
                 pirmunai.sort(PalygintiPavardes);
             }
-
-            // sort(nesimokantys.begin(), nesimokantys.end(), PalygintiPavardes);
-            // sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
             auto t2 = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> difft = t2 - t1;
-            // LaikasRusiavimo += difft.count();
             if (t != 0)
             {
                 LaikasRusiavimo += difft.count();
@@ -234,24 +221,18 @@ void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int
                 nesimokantys.sort(PalygintiKategorijas);
                 pirmunai.sort(PalygintiKategorijas);
             }
-
-            // sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
-            // sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
             auto t2 = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> difft = t2 - t1;
-            // LaikasRusiavimo += difft.count();
             if (t != 0)
             {
                 LaikasRusiavimo += difft.count();
             }
         }
-
         cout << "Rusiavimas vidutiniskai uztruko: " << LaikasRusiavimo / 2 << "s" << endl;
         BendrasLaikas += (LaikasRusiavimo / 2);
     }
     else if (RusiavimasPagal == 4)
     {
-
         cout << "Rusiavimas uztruko: 0.000 s" << endl;
     }
 
@@ -265,13 +246,11 @@ void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int
         {
             buferis << std::setw(16) << std::left << j.pavarde << std::setw(16) << std::left << j.vardas << std::setw(16) << std::fixed << std::setprecision(2) << j.BalasGalutinisVid << endl;
         }
-
         f << buferis.rdbuf();
         buferis.str("");
         buferis.clear();
         f.close();
         pirmunai.clear();
-
         f.open(FILENESIMOK);
         buferis << std::setw(16) << std::left << "Pavarde" << std::setw(16) << std::left << "Vardas" << std::setw(16) << std::left << "Galutinis (Vid.)\n";
         buferis << "----------------------------------------------------" << endl;
@@ -279,22 +258,13 @@ void PrintVektorius(konteineris &nesimokantys, konteineris &pirmunai, int a, int
         {
             buferis << std::setw(16) << std::left << j.pavarde << std::setw(16) << std::left << j.vardas << std::setw(16) << std::fixed << std::setprecision(2) << j.BalasGalutinisVid << endl;
         }
-
         f << buferis.rdbuf();
         f.close();
-
         auto end2 = std::chrono::high_resolution_clock::now();
-
         std::chrono::duration<double> diff2 = end2 - start2;
-        // IsvedimoLaikas += diff2.count();
     }
     nesimokantys.clear();
-    // cout << "Failus vidutiniskai uztruko isvesti: " << IsvedimoLaikas / 2 << "s" << endl;
-    // BendrasLaikas += IsvedimoLaikas / 2;
 }
-
-// template <typename konteineris>
-// void vectorIdejimas(int studSkaicius, konteineris &pirmunai, konteineris &nesimokantys, double &BendrasLaikas, konteineris &studentaiTest);
 
 template <typename konteineris>
 void vectorIdejimas(int studSkaicius, konteineris &pirmunai, konteineris &nesimokantys, double &BendrasLaikas, konteineris &studentaiTest)
@@ -302,7 +272,6 @@ void vectorIdejimas(int studSkaicius, konteineris &pirmunai, konteineris &nesimo
     string file = "Studentai" + std::to_string(studSkaicius) + ".txt";
     studentaiTest;
     fileskait(studentaiTest, true, file, BendrasLaikas);
-
     double visasLaikas1 = 0.0;
     for (int c = 0; c < 2; c++)
     {
@@ -330,8 +299,6 @@ void vectorIdejimas(int studSkaicius, konteineris &pirmunai, konteineris &nesimo
     cout << "Duomenu isskirstymas i dvi grupes vidutiniskai trunka: " << visasLaikas1 / 2 << "s\n";
     BendrasLaikas += visasLaikas1 / 2;
 }
-// template <typename konteineris>
-// void tyrimai(int pasirinkimasTyrimo, konteineris& pirmunai, konteineris& nesimokantys, konteineris& studentaiTest);
 
 template <typename konteineris>
 void tyrimai(int pasirinkimasTyrimo, konteineris &pirmunai, konteineris &nesimokantys, konteineris &studentaiTest)
@@ -352,7 +319,6 @@ void tyrimai(int pasirinkimasTyrimo, konteineris &pirmunai, konteineris &nesimok
             cout << "...\n";
         }
     }
-
     else if (pasirinkimasTyrimo == 2)
     {
         int RusiavimasPagal;
@@ -385,8 +351,6 @@ void tyrimai(int pasirinkimasTyrimo, konteineris &pirmunai, konteineris &nesimok
         for (int a = 1000; a <= 10000000; a *= 10)
         {
             double BendrasVidLaikas = 0.0;
-            // vector<Stud> pirmunai;
-            // vector<Stud> nesimokantys;
             vectorIdejimas(a, pirmunai, nesimokantys, BendrasVidLaikas, studentaiTest);
             PrintVektorius(nesimokantys, pirmunai, a, RusiavimasPagal, BendrasVidLaikas);
             cout << "Visos programos vykdymo laikas: ";
@@ -395,5 +359,4 @@ void tyrimai(int pasirinkimasTyrimo, konteineris &pirmunai, konteineris &nesimok
         }
     }
 }
-
 #endif
