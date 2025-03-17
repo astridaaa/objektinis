@@ -9,14 +9,44 @@ int main(){
     cout << "1 | vector tipo konteineriu" << endl;
     cout << "2 | deque tipo konteineriu" << endl;
     cout << "3 | list tipo konteineriu" << endl;
-    cin >> konteineriuTipas;
+    while (true)
+    {   try
+        {   cin >> konteineriuTipas;
+            if (cin.fail())
+            {   cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw "Iveskite skaiciu";
+                break;}
+            else if (meniu > 3 || meniu < 1)
+                {throw "Neteisingas pasirinkimas, iveskite skaiciu 1-3";
+                break;}
+            break;
+        }
+        catch (const char *masyvas)
+        {cout << masyvas << endl;}
+    }
 
     cout << "Studentus rusiuoti pagal:" << endl;
     cout << "1 | Vardus\n";
     cout << "2 | Pavardes\n";
     cout << "3 | Galutini bala\n";
     cout << "4 | Duomenu nerusiuoti\n";
-    cin >> rusiavimasPagal;
+    while (true)
+    {   try
+        {   cin >> rusiavimasPagal;
+            if (cin.fail())
+            {   cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw "Iveskite skaiciu";
+                break;}
+            else if (meniu > 4 || meniu < 1)
+                {throw "Neteisingas pasirinkimas, iveskite skaiciu 1-4";
+                break;}
+            break;
+        }
+        catch (const char *masyvas)
+        {cout << masyvas << endl;}
+    }
 
     if (konteineriuTipas == 1) {
         konteinerisVector studentai, pirmunai, nesimokantys;

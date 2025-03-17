@@ -1,5 +1,4 @@
 
-
 #include "../functions.h"
 #include "../main.h"
 using std::deque;
@@ -264,7 +263,7 @@ void vykdomaPrograma2(int rusiavimasPagal, konteineris &studentai, konteineris &
         nuskaitymasFile(testavimoFile, visasLaikas, studentai);
         studentuRusiavimas2(rusiavimasPagal, studentai, visasLaikas, rusiavimoLaikas);
         studentuIsskirstymas2(studentai, visasLaikas, nesimokantys, rusiavimoLaikas);
-        testavimasPrint(studentai, nesimokantys, nesimokantys, a);
+        //testavimasPrint(studentai, nesimokantys, nesimokantys, a);
         cout << "Bendras programos vykdymo laikas: " << visasLaikas  << "s" << endl;
     }
 }
