@@ -1,11 +1,8 @@
 
-#include "../main.h"
+
 #include "../functions.h"
-#include <list>
-#include <type_traits>
-#include <deque>
+#include "../main.h"
 using std::deque;
-using std::is_same_v;
 using std::list;
 
 template <typename konteineris>
@@ -22,11 +19,10 @@ void nuskaitymasFile(int duomenuRusiavimas, string filePavadinimas, double &visa
     for (int i = 0; i < 3; i++)
     {
         studentai.clear();
-        bufferis.str("");
         bufferis.clear();
+        bufferis.str("");
         auto start = std::chrono::high_resolution_clock::now();
         bufferis << f.rdbuf();
-        
         getline(bufferis, eilute1); 
         while (bufferis){
             if (!bufferis.eof()){
@@ -52,7 +48,7 @@ void nuskaitymasFile(int duomenuRusiavimas, string filePavadinimas, double &visa
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> diff = end - start;
-        if (i == 1 || i == 2){laikas += diff.count();}
+        if (i != 0){laikas += diff.count();}
     }
     f.close();
     visasLaikas += (laikas / 2);
@@ -62,15 +58,16 @@ void nuskaitymasFile(int duomenuRusiavimas, string filePavadinimas, double &visa
     }
     }
 
+
 template <typename konteineris>
 void studentuIsskirstymas(konteineris &studentai, double &visasLaikas, konteineris &pirmunai, konteineris &nesimokantys)
 { 
     double laikasProgramos = 0.0;
 
-    for (int j = 0; j < 3; j++)
+    for (int i = 0; i < 3; i++)
     {
         auto start1 = std::chrono::high_resolution_clock::now();
-        for (Stud j : studentai)
+        for ( Stud j : studentai)
         {
             if (j.BalasGalutinisVid >= 5)
             {
@@ -81,45 +78,47 @@ void studentuIsskirstymas(konteineris &studentai, double &visasLaikas, konteiner
         }
         auto end1 = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> diff1 = end1 - start1;
-        if (j != 0){laikasProgramos += diff1.count();}
-        if(j != 2){
+        if (i != 0){laikasProgramos += diff1.count();}
+        if(i != 2){
             pirmunai.clear();
             nesimokantys.clear();
         }
-        else{
             if constexpr (std::is_same_v<konteineris, vector<Stud>> || std::is_same_v<konteineris, deque<Stud>>){
                 pirmunai.shrink_to_fit();
                 nesimokantys.shrink_to_fit();
             }
-
-        }
     }
     visasLaikas += (laikasProgramos / 2);
     cout << "Studentu isskirstymas i dvi grupes vidutiniskai truko: " << laikasProgramos / 2 <<"s" << endl;
 }
 
 template <typename konteineris>
-void studentuRusiavimas(int rusiavimasPagal, konteineris &pirmunai, konteineris &nesimokantys, double &visasLaikas)
+void studentuRusiavimas(int &rusiavimasPagal, konteineris &pirmunai, konteineris &nesimokantys, double &visasLaikas)
 {
     double time = 0.0;
-    if constexpr (is_same_v<konteineris, list<typename konteineris::value_type>>) // check ar list
+    if constexpr (std::is_same_v<konteineris, std::list<Stud>>) // check ar list
     {
         for (int i = 0; i < 3; i++)
-        {   auto start = std::chrono::high_resolution_clock::now();
+        {   
+            auto start = std::chrono::high_resolution_clock::now();
+            
+            std::thread t1([&]() {
+                if (rusiavimasPagal == 1) pirmunai.sort(PalygintiVardas);
+                else if (rusiavimasPagal == 2) pirmunai.sort(PalygintiPavardes);
+                else if (rusiavimasPagal == 3) pirmunai.sort(PalygintiKategorijas);
+                else cout << "Elementu rusiavimas vidutiniskai truko: 0.000s" << endl;
+            });
 
-            if (rusiavimasPagal == 1){
-                nesimokantys.sort(PalygintiVardas);
-                pirmunai.sort(PalygintiVardas);
-            }
-            else if (rusiavimasPagal == 2){
-                nesimokantys.sort(PalygintiPavardes);
-                pirmunai.sort(PalygintiPavardes);
-            }
-            else if (rusiavimasPagal == 3){
-                nesimokantys.sort(PalygintiKategorijas);
-                pirmunai.sort(PalygintiKategorijas);
-            }
-            else{cout << "Elementu rusiavimas vidutiniskai truko: 0.000s" << endl;}
+            std::thread t2([&]() {
+                if (rusiavimasPagal == 1) nesimokantys.sort(PalygintiVardas);
+                else if (rusiavimasPagal == 2) nesimokantys.sort(PalygintiPavardes);
+                else if (rusiavimasPagal == 3) nesimokantys.sort(PalygintiKategorijas);
+                else cout << "Elementu rusiavimas vidutiniskai truko: 0.000s" << endl;
+            });
+
+            t1.join();
+            t2.join();
+
             auto end = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> diff = end - start;
             if (i != 0){time += diff.count();}
@@ -129,25 +128,30 @@ void studentuRusiavimas(int rusiavimasPagal, konteineris &pirmunai, konteineris 
     }
     else
     {
-        for (int i = 0; i < 3; i++)
-        {   auto start = std::chrono::high_resolution_clock::now();
-            if (rusiavimasPagal == 1){
-                sort(nesimokantys.begin(), nesimokantys.end(), PalygintiVardas);
-                sort(pirmunai.begin(), pirmunai.end(), PalygintiVardas);
-            }
-            else if (rusiavimasPagal == 2){
-                sort(nesimokantys.begin(), nesimokantys.end(), PalygintiPavardes);
-                sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
-            }
-            else if (rusiavimasPagal == 3){
-                sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
-                sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
-            }
-            else
-            {cout << "Elementu rusiavimas vidutiniskai truko: 0.000s" << endl;}
+        for (int j = 0; j < 3; j++)
+        {   
+            auto start = std::chrono::high_resolution_clock::now();
+
+            std::thread t1([&](){
+                if(rusiavimasPagal == 1) std::sort(pirmunai.begin(), pirmunai.end(), PalygintiVardas);
+                else if(rusiavimasPagal == 2) std::sort(pirmunai.begin(), pirmunai.end(), PalygintiPavardes);
+                else if(rusiavimasPagal == 3) std::sort(pirmunai.begin(), pirmunai.end(), PalygintiKategorijas);
+                else cout << "Elementu rusiavimas vidutiniskai truko: 0.000s" << endl;
+            });
+
+            std::thread t2([&](){
+                if(rusiavimasPagal == 1) std::sort(nesimokantys.begin(), nesimokantys.end(), PalygintiVardas);
+                else if(rusiavimasPagal == 2) std::sort(nesimokantys.begin(), nesimokantys.end(), PalygintiPavardes);
+                else if(rusiavimasPagal == 3) std::sort(nesimokantys.begin(), nesimokantys.end(), PalygintiKategorijas);
+                else cout << "Elementu rusiavimas vidutiniskai truko: 0.000s" << endl;
+            });
+            
+            t1.join();
+            t2.join();
+
             auto end = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> difference = end - start;
-            if (i != 0)
+            if (j != 0)
             {time += difference.count();}
         }
         cout << "Elementu rusiavimas vidutiniskai truko: " << time / 2 << "s"<< endl;
@@ -156,20 +160,7 @@ void studentuRusiavimas(int rusiavimasPagal, konteineris &pirmunai, konteineris 
 }
 
 template <typename konteineris>
-void vykdomaPrograma(int rusiavimasPagal, konteineris& studentai, konteineris& pirmunai, konteineris& nesimokantys){
-    for(int a = 1000; a <= 10000000; a *= 10){
-        double visasLaikas = 0.0;
-        string testavimoFile = "Tyrimo_files\\Studentai" + std::to_string(a) + ".txt";
-        cout << "...\n" << std::to_string(a) + ".txt" << endl;
-        nuskaitymasFile(rusiavimasPagal,testavimoFile, visasLaikas, studentai);
-        studentuIsskirstymas(studentai, visasLaikas, pirmunai, nesimokantys);
-        studentuRusiavimas(rusiavimasPagal, pirmunai, nesimokantys, visasLaikas);
-        //testavimasPrint(studentai, pirmunai, nesimokantys, a);
-        cout << "Bendras programos vykdymo laikas: " << visasLaikas << "s" << endl;
-    }  
-}
-//template <typename konteineris>
-/*void testavimasPrint(konteineris &studentai, konteineris& pirmunai, konteineris& nesimokantys, int a)
+void testavimasPrint(konteineris &studentai, konteineris& pirmunai, konteineris& nesimokantys, int a)
 {   
     string FILEMOK = "Pirmunai" + std::to_string(a) + ".txt";
     string FILENESIMOK = "Nesimokantys" + std::to_string(a) + ".txt";
@@ -200,4 +191,18 @@ void vykdomaPrograma(int rusiavimasPagal, konteineris& studentai, konteineris& p
 
     F << buferis.rdbuf();
     F.close();
-}*/
+}
+
+template <typename konteineris>
+void vykdomaPrograma(int& rusiavimasPagal, konteineris& studentai, konteineris& pirmunai, konteineris& nesimokantys){
+    for(int a = 1000; a <= 10000000; a *= 10){
+        double visasLaikas = 0.0;
+        string testavimoFile = "Tyrimo_files\\Studentai" + std::to_string(a) + ".txt";
+        cout << "...\n" << std::to_string(a) + ".txt" << endl;
+        nuskaitymasFile(rusiavimasPagal,testavimoFile, visasLaikas, studentai);
+        studentuIsskirstymas(studentai, visasLaikas, pirmunai, nesimokantys);
+        studentuRusiavimas(rusiavimasPagal, pirmunai, nesimokantys, visasLaikas);
+        //testavimasPrint(studentai, pirmunai, nesimokantys, a);
+        cout << "Bendras programos vykdymo laikas: " << visasLaikas << "s" << endl;
+    }  
+}

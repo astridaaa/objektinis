@@ -1,10 +1,5 @@
-/*Bendro studentai konteinerio (vector, list ir deque tipų) skaidymas (rūšiavimas) į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų". 
-Tokiu būdu tas pats studentas yra dvejuose konteineriuose: bendrame studentai ir viename iš suskaidytų (vargšiukai arba kietiakai). Nesunku pastebėti, 
-kad tokia strategija yra neefektyvi užimamos atminties atžvilgiu (įsitikinkite tuo!), tačiau šiame žingsnyje svarbiausia yra patyrinėti, kaip 
-programos veikimo sparta priklauso nuo konteinerio tipo?*/
 
 #include "strategija.h"
-#include "../functions.h"
 
 
 int main(){
@@ -24,21 +19,15 @@ int main(){
     cin >> rusiavimasPagal;
 
     if (konteineriuTipas == 1) {
-        vector<Stud> studentai;
-        vector<Stud> pirmunai;
-        vector<Stud> nesimokantys;
-        vykdomaPrograma(rusiavimasPagal, studentai, pirmunai, nesimokantys);
+        konteinerisVector studentai, pirmunai, nesimokantys;
+       vykdomaPrograma(rusiavimasPagal, studentai, pirmunai, nesimokantys);
     }
     else if (konteineriuTipas == 2) {
-        deque<Stud> studentai;
-        deque<Stud> pirmunai;
-        deque<Stud> nesimokantys;
-        vykdomaPrograma(rusiavimasPagal, studentai, pirmunai, nesimokantys);
+        konteinerisDeque studentai, pirmunai, nesimokantys;
+       vykdomaPrograma(rusiavimasPagal, studentai, pirmunai, nesimokantys);
     }
     else{
-        list<Stud> studentai;
-        list<Stud> pirmunai;
-        list<Stud> nesimokantys;
+        konteinerisList studentai, pirmunai, nesimokantys;
         vykdomaPrograma(rusiavimasPagal, studentai, pirmunai, nesimokantys);
     }
 }

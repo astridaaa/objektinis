@@ -20,6 +20,8 @@
 #include <filesystem>
 #include <deque>
 #include <list>
+#include <execution>
+#include <thread>
 
 using std::cin;
 using std::cout;

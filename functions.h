@@ -20,6 +20,7 @@ void duomenu_generavimas(vector<Stud> &studentai);
 
 string filePasirinkimas();
 
+
 template <typename konteineris>
 void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLaikas)
 {
@@ -88,7 +89,7 @@ void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLa
             else
                 break;
         }
-        for (string s : visaeil)
+        for ( string s : visaeil)
         {
             std::istringstream f(s);
             f >> studentas.vardas >> studentas.pavarde;
@@ -276,7 +277,7 @@ void vectorIdejimas(int studSkaicius, konteineris &pirmunai, konteineris &nesimo
     for (int c = 0; c < 2; c++)
     {
         auto start1 = std::chrono::high_resolution_clock::now();
-        for (Stud j : studentaiTest)
+        for ( Stud j : studentaiTest)
         {
             if (j.BalasGalutinisVid >= 5)
             {
