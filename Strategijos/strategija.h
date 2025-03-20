@@ -405,7 +405,7 @@ void vykdomaPrograma3(int rusiavimasPagal, konteineris &studentai, konteineris &
         studentuSkirstymas3(studentai, nesimokantys, visasLaikas);
         StudentuRusiavimas3(studentai, nesimokantys, visasLaikas, rusiavimasPagal);
         //testavimasPrint(studentai, nesimokantys, nesimokantys, a);
-        print(studentai, nesimokantys, rusiavimasPagal, a);
+        //print(studentai, nesimokantys, rusiavimasPagal, a);
         cout << "Bendras programos vykdymo laikas: " << visasLaikas << "s" << endl;
     }
 }
