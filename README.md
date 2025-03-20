@@ -290,3 +290,308 @@ Programa skirta failų, turinčių skirtingą studentų skaičių, testavimui su
 
 
 </details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<details>
+    <summary><h2>2 strategija</h2></summary>
+    <table class ="fixed">
+    <thead>
+        <tr>
+            <th width=100px></th>
+            <th width=100px> Konteinerio tipas</th>
+            <th width=100px> Nuskaitymas iš failo (s)</th>
+            <th width=100px> Rikiavimas (s) </th>
+            <th width=100px> Skirstymas į "pirmūnus" ir "nesimokančius" (s) </th>
+            <th width=100px> Bendras programos vykdymo laikas (s) </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan=3>Studentai1000.txt</td>
+            <td>Vektorius</td>
+            <td>0.0065997</td>
+            <td>0.007648</td>
+            <td>0</td>
+            <td><b>0.0142477</b></td>
+        </tr>
+        <tr>
+            <td>Dvipusė eilė</td>
+            <td>0</td>
+            <td>0.0132348</td>
+            <td>0</td>
+            <td><b>0.0132348</b></td>
+        </tr>
+        <tr>
+            <td>Sąrašas</td>
+            <td>0</td>
+            <td>0.0100254</td>
+            <td>0</td>
+            <td><b>0.0100254</b></td>
+        </tr>
+        <tr>
+            <td rowspan = 3>Studentai10000.txt</td>
+            <td>Vektorius</td>
+            <td>0.0232996</td>
+            <td>0.0219461</td>
+            <td>0.0059915</td>
+            <td><b>0.0512372</b></td>
+        </tr>
+        <tr>
+            <td>Dvipusė eilė</td>
+            <td>0.0277649</td>
+            <td>0.0256593</td>
+            <td>0.0012814</td>
+            <td><b>0.0547056</b></td>
+        </tr>
+        <tr>
+            <td>Listas</td>
+            <td>0.028905</td>
+            <td>0.0053132</td>
+            <td>0</td>
+            <td><b>0.0342182</b></td>
+        </tr>
+        <tr>
+            <td rowspan=3>Studentai100000.txt</td>
+            <td>Vektorius</td>
+            <td>0.176522</td>
+            <td>0.340928</td>
+            <td>0.0350781</td>
+            <td><b>0.5525281</b></td>
+        </tr>
+        <tr>
+            <td>Dvipusė eilė</td>
+            <td>0.189941</td>
+            <td>0.435305</td>
+            <td>0.0273773</td>
+            <td><b>0.6526233</b></td>
+        </tr>
+        <tr>
+            <td>Sąrašas</td>
+            <td>0.210389</td>
+            <td>0.171089</td>
+            <td>0.0413665</td>
+            <td><b>0.4228445</b></td>
+        </tr>
+      <tr>
+            <td rowspan=3>Studentai1000000.txt</td>
+            <td>Vektorius</td>
+            <td>2.57467</td>
+            <td>4.1003</td>
+            <td>0.358227</td>
+            <td><b>7.033197</b></td>
+        </tr>
+        <tr>
+            <td>Dvipusė eilė</td>
+            <td>2.62864</td>
+            <td>5.06983</td>
+            <td>0.349161</td>
+            <td><b>8.047631</b></td>
+        </tr>
+        <tr>
+            <td>Sąrašas</td>
+            <td>2.75252</td>
+            <td>1.60927</td>
+            <td>0.367283</td>
+            <td><b>4.729073</b></td>
+        </tr>
+      <tr>
+            <td rowspan=3>Studentai10000000.txt</td>
+            <td>Vektorius</td>
+            <td>25.334</td>
+            <td>50.6552</td>
+            <td>3.23374</td>
+            <td><b>79.22294</b></td>
+        </tr>
+        <tr>
+            <td>Dvipusė eilė</td>
+            <td>26.5166</td>
+            <td>61.3732</td>
+            <td>2.59927</td>
+            <td><b>90.48907</b></td>
+        </tr>
+        <tr>
+            <td>Sąrašas</td>
+            <td>27.6354</td>
+            <td>21.8511</td>
+            <td>3.55478</td>
+            <td><b>53.04128</b></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+![image](https://github.com/user-attachments/assets/f5694624-4663-44d2-b260-8a12cb6e4790)
+
+
+
+
+
+</details>
+
+
+
+
+
+<details>
+    <summary><h2>3 strategija</h2></summary>
+    <table class ="fixed">
+    <thead>
+        <tr>
+            <th width=100px></th>
+            <th width=100px> Konteinerio tipas</th>
+            <th width=100px> Nuskaitymas iš failo (s)</th>
+            <th width=100px> Rikiavimas (s) </th>
+            <th width=100px> Skirstymas į "pirmūnus" ir "nesimokančius" (s) </th>
+            <th width=100px> Bendras programos vykdymo laikas (s) </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan=3>Studentai1000.txt</td>
+            <td>Vektorius</td>
+            <td>0.0020473</td>
+            <td>0</td>
+            <td>0</td>
+            <td><b>0.0020473</b></td>
+        </tr>
+        <tr>
+            <td>Dvipusė eilė</td>
+            <td>0.0086449</td>
+            <td>0.0010443</td>
+            <td>0.000812</td>
+            <td><b>0.0105012</b></td>
+        </tr>
+        <tr>
+            <td>Sąrašas</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td><b>0</b></td>
+        </tr>
+        <tr>
+            <td rowspan = 3>Studentai10000.txt</td>
+            <td>Vektorius</td>
+            <td>0.0165151</td>
+            <td>0.0153975</td>
+            <td>0</td>
+            <td><b>0.0319126</b></td>
+        </tr>
+        <tr>
+            <td>Dvipusė eilė</td>
+            <td>0.0159216</td>
+            <td>0</td>
+            <td>0.0119027</td>
+            <td><b>0.0278243</b></td>
+        </tr>
+        <tr>
+            <td>Listas</td>
+            <td>0.0177284</td>
+            <td>0.0075679</td>
+            <td>0</td>
+            <td><b>0.0252963</b></td>
+        </tr>
+        <tr>
+            <td rowspan=3>Studentai100000.txt</td>
+            <td>Vektorius</td>
+            <td>0.791214</td>
+            <td>0.0547273</td>
+            <td>0.0224924</td>
+            <td><b>0.8684337</b></td>
+        </tr>
+        <tr>
+            <td>Dvipusė eilė</td>
+            <td>0.0787565</td>
+            <td>0.0674405</td>
+            <td>0.0245542</td>
+            <td><b>0.17007512</b></td>
+        </tr>
+        <tr>
+            <td>Sąrašas</td>
+            <td>0.0945634</td>
+            <td>0.0335261</td>
+            <td>0.0471157</td>
+            <td><b>0.1752052</b></td>
+        </tr>
+      <tr>
+            <td rowspan=3>Studentai1000000.txt</td>
+            <td>Vektorius</td>
+            <td>1.17731</td>
+            <td>0.738691</td>
+            <td>0.1469</td>
+            <td><b>2.062901</b></td>
+        </tr>
+        <tr>
+            <td>Dvipusė eilė</td>
+            <td>1.22941</td>
+            <td>0.887679</td>
+            <td>0.24186</td>
+            <td><b>2.358949</b></td>
+        </tr>
+        <tr>
+            <td>Sąrašas</td>
+            <td>1.29301</td>
+            <td>0.517986</td>
+            <td>0.341315</td>
+            <td><b>2.152311</b></td>
+        </tr>
+      <tr>
+            <td rowspan=3>Studentai10000000.txt</td>
+            <td>Vektorius</td>
+            <td>11.7892</td>
+            <td>8.72044</td>
+            <td>1.61681</td>
+            <td><b>22.12645</b></td>
+        </tr>
+        <tr>
+            <td>Dvipusė eilė</td>
+            <td>12.3367</td>
+            <td>11.0042</td>
+            <td>2.53892</td>
+            <td><b>25.87892</b></td>
+        </tr>
+        <tr>
+            <td>Sąrašas</td>
+            <td>13.0431</td>
+            <td>7.14533</td>
+            <td>3.44146</td>
+            <td><b>23.62989</b></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+![image](https://github.com/user-attachments/assets/f67d643d-45d7-4a32-b509-6f024e9a695c)
+
+
+
+
+
+</details>
+
+
