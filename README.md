@@ -6,7 +6,26 @@ Programa skirta failų, turinčių skirtingą studentų skaičių, testavimui su
 - AMD Ryzen 5 5500U CPU
 - 32 GB RAM
 - 256GB SSD storage
----
+
+ # Naudojimosi instrukcija:
+- <a href="https://gnuwin32.sourceforge.net/packages/make.htm">Susiinstaliuoti make; </a>
+- Parsisiųsti v1.0 versiją;
+- Terminale atsidarius versijos direktoriją paleisti:
+    - `make run_main` - norint paleisti antrą tyrimą _(v0.4)_
+    - `make run1` - norint paleisti 1 strategiją 
+    - `make run2` - norint paleisti 2 strategiją
+    - `make run3` - norint paleisti 3 strategiją
+
+# Programos aprašas:
+Pagrindinės funkcijos:
+-    `nuskaitymasFile()` - template funkcija skirta nuskaityti duomenis iš failo
+-    `studentuIsskirstymas()` - pirmajai strategijai skirta funkcija studentus skirstyti į "pirmūnus" ir "nesimokančius"
+-    `studentuIsskirstymas2()` - studentų išskirstymas nuo galo naudojant iteratorių
+-    `studentuSkirstymas3()` - studentų išskirstymas "nesimokančius" perkeliant į kitą konteinerį
+-    `studentuRusiavimas() / studentuRusiavimas2() / studentuRusiavimas3()` - studentai rikiuojami pagal pasirinktus kriterijus: vardą, pavardę arba galutinį balą, skaičiuojamą pagal vidurkį
+
+
+## v0.4 implementacija naudojant funkcijų šablonus
 <table class ="fixed">
     <thead>
         <tr>
@@ -152,7 +171,11 @@ Programa skirta failų, turinčių skirtingą studentų skaičių, testavimui su
 
 
 -----
-# Strategijos
+# Strategijų aprašymai:
+-    Pirmoji strategija išskirsto studentus į dvi grupes: "nesimokantys" ir "pirmūnai" palikdama studentus ne tik naujame konteineryje, bet ir "studentai" pradiniame konteineryje.
+-    Antroji strategija pirmiausia studentus surikiuoja, tuomet juos išskirsto: "nesimokantys" perkeliami į atskirą konteinerį, o "pirmūnai" paliekami studentų konteineryje.
+-    Trečioji strategija tai antrosios strategijos implementacija naudojant `std::partition` , `std::copy` , `std::erase`.
+
 <details>
     <summary><h2>1 strategija</h2></summary>
     <table class ="fixed">
