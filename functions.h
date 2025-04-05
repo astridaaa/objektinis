@@ -20,6 +20,13 @@ void duomenu_generavimas(vector<Stud> &studentai);
 
 string filePasirinkimas();
 
+Stud::Stud(std::istream& is){   //realizacija konstruktoriaus Stud(std::istream& is);
+    skaitytiStudentas(is);
+}
+std::istream& Stud::skaitytiStudentas(std::istream&) {
+    // Member funkcijos realizacija paremta ankstesniojo 2-ojo darbo funkcija: 
+    // std::istream& skaitytiStudentas(std::istream&, Studentas&)
+  }
 
 template <typename konteineris>
 void fileskait(konteineris &studentai, bool a, string filePav, double &BendrasLaikas)
